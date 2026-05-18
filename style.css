@@ -1,0 +1,747 @@
+/* ===== リセット & 基本設定 ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: #333;
+  background: #fff;
+  line-height: 1.7;
+}
+img { max-width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+
+:root {
+  --primary: #0c1a2e;
+  --primary-light: #1a3050;
+  --accent: #38bdf8;
+  --accent-light: #7dd3fc;
+  --bg-gray: #f0f9ff;
+  --text-dark: #333;
+  --text-mid: #555;
+  --error: #e53e3e;
+  --white: #fff;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.section-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-subtitle {
+  text-align: center;
+  color: var(--text-mid);
+  margin-bottom: 56px;
+  font-size: 0.95rem;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--accent);
+  margin: 12px auto 0;
+}
+section { padding: 96px 0; }
+section:nth-child(even) { background: var(--bg-gray); }
+
+/* ===== ヘッダー ===== */
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(12,26,46,0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.35s, box-shadow 0.35s;
+}
+#site-header.scrolled {
+  background: rgba(12,26,46,0.97);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  padding: 0 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.header-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+.header-logo small {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--white);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+.nav-links a:hover { border-color: var(--accent); color: var(--accent-light); }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  inset: 68px 0 0 0;
+  background: var(--primary);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  color: var(--white);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* ===== ヒーロー ===== */
+#hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0c1a2e 0%, #071020 60%, #0f2440 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(56,189,248,0.1) 0%, transparent 60%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(56,189,248,0.15);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 6px 20px;
+  border-radius: 20px;
+  margin-bottom: 28px;
+}
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.45;
+  margin-bottom: 20px;
+}
+.hero-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.hero-catch {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.hero-sub {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 48px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 16px 48px;
+  border-radius: 40px;
+  letter-spacing: 0.06em;
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(56,189,248,0.35);
+}
+.btn-primary:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(56,189,248,0.45);
+}
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.4);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-scroll::after {
+  content: '';
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.3);
+  animation: scrollLine 1.8s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ===== 会社概要 ===== */
+#about .about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.about-text h3 {
+  font-size: 1.2rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.about-text p { color: var(--text-mid); margin-bottom: 16px; font-size: 0.95rem; }
+
+/* 社訓ブロック */
+.shakkun {
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+.shakkun h4 {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.shakkun p {
+  color: var(--white);
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+/* 会社概要テーブル */
+.company-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.company-table tr { border-bottom: 1px solid #e5e7eb; }
+.company-table th {
+  text-align: left;
+  padding: 12px 16px 12px 0;
+  color: var(--primary);
+  font-weight: 700;
+  width: 110px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+.company-table td { padding: 12px 0; color: var(--text-mid); }
+
+/* ===== 事業内容 ===== */
+#business { background: var(--bg-gray); }
+.business-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.business-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 3px 18px rgba(0,0,0,0.07);
+  transition: transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.business-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--accent);
+}
+.business-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+.business-icon { font-size: 2.6rem; margin-bottom: 16px; }
+.business-card h3 { font-size: 1rem; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+.business-card p { font-size: 0.87rem; color: var(--text-mid); }
+.business-list {
+  list-style: none;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.business-list li {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  padding-left: 16px;
+  position: relative;
+  text-align: left;
+}
+.business-list li::before {
+  content: '・';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.business-etc {
+  text-align: left;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* ===== 募集職種 ===== */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.job-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 36px 28px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  transition: transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.job-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--accent);
+}
+.job-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,0.13); }
+.job-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.job-card h3 { font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+.job-tag {
+  display: inline-block;
+  background: rgba(12,26,46,0.08);
+  color: var(--primary);
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+.job-tag + .job-tag { margin-left: 6px; }
+.job-card p { font-size: 0.88rem; color: var(--text-mid); margin-bottom: 18px; }
+.job-detail {
+  border-top: 1px solid #eee;
+  padding-top: 14px;
+  font-size: 0.82rem;
+  color: var(--text-mid);
+}
+.job-detail dt { font-weight: 700; color: var(--primary); float: left; width: 70px; margin-bottom: 6px; }
+.job-detail dd { margin-left: 70px; margin-bottom: 6px; }
+
+/* 求人イントロ */
+.job-section-intro {
+  text-align: center;
+  color: var(--text-mid);
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+  line-height: 1.9;
+}
+
+/* 2カラム求人グリッド */
+.jobs-two-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* 求人カード共通 */
+.job-single-wrap { max-width: 860px; margin: 0 auto; }
+.job-card-full {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.1);
+  overflow: hidden;
+  position: relative;
+}
+.job-card-full::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--accent);
+}
+.job-card-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 36px 40px 24px;
+  border-bottom: 1px solid #e8f4ff;
+}
+.job-icon-lg { font-size: 3rem; flex-shrink: 0; }
+.job-card-header h3 { font-size: 1.5rem; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+.job-sections { padding: 32px 40px 40px; display: flex; flex-direction: column; gap: 28px; }
+.job-section h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+  margin-bottom: 12px;
+}
+.job-section p { font-size: 0.92rem; color: var(--text-mid); }
+.job-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+}
+.job-list li {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  padding-left: 18px;
+  position: relative;
+}
+.job-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+.job-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: #e8f4ff;
+  border: 1px solid #e8f4ff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.job-detail-block {
+  background: var(--white);
+  padding: 16px 18px;
+}
+.job-detail-block--wide {
+  grid-column: 1 / -1;
+}
+.job-detail-block h4 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.job-detail-block p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
+.job-detail-block small { font-size: 0.76rem; color: #888; }
+
+/* ===== キャリアアップモデル ===== */
+#career { background: var(--bg-gray); }
+.career-img-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.1);
+}
+.career-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== 待遇・福利厚生 ===== */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.benefit-item {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+  transition: transform 0.2s;
+}
+.benefit-item:hover { transform: translateY(-4px); }
+.benefit-icon { font-size: 2.2rem; margin-bottom: 12px; }
+.benefit-item h4 { font-size: 0.92rem; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+.benefit-item p { font-size: 0.83rem; color: var(--text-mid); }
+
+/* ===== 先輩の声 ===== */
+.voices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.voice-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+.voice-quote { font-size: 2.5rem; color: var(--accent); line-height: 1; margin-bottom: 12px; }
+.voice-card blockquote {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  margin-bottom: 20px;
+  font-style: normal;
+  line-height: 1.85;
+}
+.voice-person { display: flex; align-items: center; gap: 14px; }
+.voice-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.voice-name { font-weight: 700; font-size: 0.9rem; color: var(--primary); }
+.voice-role { font-size: 0.78rem; color: var(--text-mid); }
+
+/* ===== お問い合わせ ===== */
+#contact { background: var(--bg-gray); }
+.contact-info {
+  max-width: 700px;
+  margin: 0 auto 32px;
+  background: var(--primary);
+  border-radius: 10px;
+  padding: 20px 32px;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.contact-info-item { text-align: center; color: var(--white); }
+.contact-info-item small { display: block; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 4px; }
+.contact-info-item span { font-size: 1rem; font-weight: 700; }
+
+.form-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 48px 52px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+}
+.form-group { margin-bottom: 24px; }
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.required-badge {
+  display: inline-block;
+  background: var(--error);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.optional-badge {
+  display: inline-block;
+  background: #999;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fafafa;
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(12,26,46,0.08);
+}
+.form-control.is-error { border-color: var(--error); }
+textarea.form-control { resize: vertical; min-height: 130px; }
+.error-msg {
+  display: none;
+  color: var(--error);
+  font-size: 0.8rem;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.error-msg.show { display: block; }
+
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.checkbox-group input[type="checkbox"] {
+  width: 20px; height: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+.checkbox-group label { margin: 0; cursor: pointer; font-weight: 400; color: var(--text-mid); }
+.checkbox-group label a { color: var(--primary); text-decoration: underline; }
+
+.btn-submit {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+  margin-top: 8px;
+}
+.btn-submit:hover { background: var(--primary-light); transform: translateY(-1px); }
+.btn-submit:active { transform: translateY(0); }
+
+#form-success {
+  display: none;
+  text-align: center;
+  padding: 48px 32px;
+}
+#form-success .success-icon { font-size: 4rem; margin-bottom: 20px; }
+#form-success h3 { font-size: 1.5rem; color: var(--primary); font-weight: 700; margin-bottom: 12px; }
+#form-success p { color: var(--text-mid); }
+
+/* ===== フッター ===== */
+footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.65);
+  padding: 48px 24px 32px;
+}
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  gap: 48px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.footer-brand .footer-logo { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.footer-brand .footer-logo span { color: var(--accent); }
+.footer-brand p { font-size: 0.82rem; }
+.footer-info h4 { font-size: 0.8rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 700; }
+.footer-info p { font-size: 0.82rem; margin-bottom: 4px; }
+.footer-bottom {
+  text-align: center;
+  font-size: 0.78rem;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 1023px) {
+  .jobs-grid { grid-template-columns: 1fr 1fr; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; }
+  .voices-grid { grid-template-columns: 1fr 1fr; }
+  .business-grid { grid-template-columns: 1fr 1fr; }
+  #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 767px) {
+  section { padding: 72px 0; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .jobs-grid { grid-template-columns: 1fr; }
+  .benefits-grid { grid-template-columns: 1fr 1fr; }
+  .voices-grid { grid-template-columns: 1fr; }
+  .business-grid { grid-template-columns: 1fr; }
+  .form-wrapper { padding: 32px 20px; }
+  .contact-info { padding: 20px; gap: 20px; }
+  .footer-inner { flex-direction: column; gap: 28px; }
+  .jobs-two-grid { grid-template-columns: 1fr; }
+  .job-card-header { flex-direction: column; align-items: flex-start; padding: 28px 24px 20px; }
+  .job-sections { padding: 24px 24px 32px; }
+  .job-detail-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .benefits-grid { grid-template-columns: 1fr; }
+}
