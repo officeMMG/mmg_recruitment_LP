@@ -21,9 +21,9 @@ fetch('data/voices.json')
       '<p style="text-align:center;color:#999;">先輩の声を読み込めませんでした。</p>';
   });
 
-/* ===== ヒーロー背景スライドショー ===== */
+/* ===== 全ページ背景スライドショー ===== */
 (function () {
-  const slides = document.querySelectorAll('.hero-slide');
+  const slides = document.querySelectorAll('.page-bg-slide');
   if (!slides.length) return;
   let current = 0;
   slides[current].classList.add('active');

@@ -10,11 +10,11 @@
   <style>
     /* ===== リセット & 基本設定 ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; background: #071020; }
     body {
       font-family: 'Noto Sans JP', sans-serif;
       color: #333;
-      background: #fff;
+      background: transparent;
       line-height: 1.7;
     }
     img { max-width: 100%; height: auto; }
@@ -54,8 +54,8 @@
       background: var(--accent);
       margin: 12px auto 0;
     }
-    section { padding: 96px 0; }
-    section:nth-child(even) { background: var(--bg-gray); }
+    section { padding: 96px 0; background: rgba(255,255,255,0.86); }
+    section:nth-child(even) { background: rgba(220,242,255,0.86); }
 
     /* ===== ヘッダー ===== */
     #site-header {
@@ -165,7 +165,7 @@
     /* ===== ヒーロー ===== */
     #hero {
       min-height: 100vh;
-      background: #071020;
+      background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -183,26 +183,21 @@
       z-index: 1;
       pointer-events: none;
     }
-    /* スライドショーコンテナ */
-    .hero-slides {
-      position: absolute;
+    /* 全ページ固定背景スライドショー */
+    .page-bg-slides {
+      position: fixed;
       inset: 0;
-      z-index: 0;
+      z-index: -1;
     }
-    .hero-slide {
+    .page-bg-slide {
       position: absolute;
       inset: 0;
       background-size: cover;
       background-position: center;
-      background-attachment: fixed; /* スクロールしても背景は固定 */
       opacity: 0;
       transition: opacity 1.8s ease-in-out;
     }
-    .hero-slide.active { opacity: 1; }
-    @media (max-width: 767px) {
-      /* iOS Safari は background-attachment:fixed が効かないため切り替え */
-      .hero-slide { background-attachment: scroll; }
-    }
+    .page-bg-slide.active { opacity: 1; }
     .hero-content { position: relative; z-index: 2; }
     .hero-badge {
       display: inline-block;
@@ -338,7 +333,7 @@
     .company-table td { padding: 12px 0; color: var(--text-mid); }
 
     /* ===== 事業内容 ===== */
-    #business { background: var(--bg-gray); }
+    #business { background: rgba(220,242,255,0.86); }
     .business-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -621,7 +616,7 @@
     .voice-role { font-size: 0.78rem; color: var(--text-mid); }
 
     /* ===== お問い合わせ ===== */
-    #contact { background: var(--bg-gray); }
+    #contact { background: rgba(220,242,255,0.86); }
     .contact-info {
       max-width: 700px;
       margin: 0 auto 32px;
@@ -747,7 +742,7 @@
 
     /* ===== フッター ===== */
     footer {
-      background: var(--primary);
+      background: rgba(12,26,46,0.92);
       color: rgba(255,255,255,0.65);
       padding: 48px 24px 32px;
     }
@@ -964,6 +959,14 @@
 </head>
 <body>
 
+  <!-- 全ページ固定背景スライドショー -->
+  <div class="page-bg-slides">
+    <div class="page-bg-slide" style="background-image:url('image/作業写真/DSC_2482.jpg')"></div>
+    <div class="page-bg-slide" style="background-image:url('image/作業写真/KIMG1583.JPG')"></div>
+    <div class="page-bg-slide" style="background-image:url('image/作業写真/横断.jpg')"></div>
+    <div class="page-bg-slide" style="background-image:url('image/作業写真/森の中の測量作業.png')"></div>
+  </div>
+
   <!-- フローティング応募ボタン（ヒーロー通過後に表示） -->
   <a href="#contact" class="float-apply" id="float-apply">今すぐ応募する ↗</a>
 
@@ -1006,14 +1009,6 @@
 
     <!-- ===== ヒーロー ===== -->
     <section id="hero">
-
-      <!-- 背景スライドショー（image/作業写真/ 内の画像を使用） -->
-      <div class="hero-slides" id="hero-slides">
-        <div class="hero-slide" style="background-image:url('image/作業写真/DSC_2482.jpg')"></div>
-        <div class="hero-slide" style="background-image:url('image/作業写真/KIMG1583.JPG')"></div>
-        <div class="hero-slide" style="background-image:url('image/作業写真/横断.jpg')"></div>
-        <div class="hero-slide" style="background-image:url('image/作業写真/森の中の測量作業.png')"></div>
-      </div>
 
       <div class="hero-content">
         <div class="hero-badge">RECRUIT 2026</div>
