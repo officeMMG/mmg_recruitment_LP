@@ -288,8 +288,14 @@
     #about .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      gap: 40px;
       align-items: start;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 16px;
+      padding: 40px;
     }
     .about-text h3 {
       font-size: 1.2rem;
@@ -301,7 +307,7 @@
 
     /* 社訓ブロック */
     .shakkun {
-      background: var(--primary);
+      background: rgba(12,26,46,0.65);
       color: var(--white);
       border-radius: 10px;
       padding: 24px 28px;
@@ -342,11 +348,14 @@
       gap: 24px;
     }
     .business-card {
-      background: var(--white);
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 12px;
       padding: 32px 24px;
       text-align: center;
-      box-shadow: 0 3px 18px rgba(0,0,0,0.07);
+      box-shadow: 0 3px 18px rgba(0,0,0,0.12);
       transition: transform 0.25s, box-shadow 0.25s;
       position: relative;
       overflow: hidden;
@@ -470,6 +479,12 @@
       font-size: 0.95rem;
       margin-bottom: 40px;
       line-height: 1.9;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 10px;
+      padding: 20px 32px;
     }
 
     /* 2カラム求人グリッド */
@@ -483,9 +498,12 @@
     /* 求人カード共通 */
     .job-single-wrap { max-width: 860px; margin: 0 auto; }
     .job-card-full {
-      background: var(--white);
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 16px;
-      box-shadow: 0 6px 32px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 32px rgba(0,0,0,0.15);
       overflow: hidden;
       position: relative;
     }
@@ -541,13 +559,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1px;
-      background: #e8f4ff;
-      border: 1px solid #e8f4ff;
+      background: rgba(200,230,255,0.3);
+      border: 1px solid rgba(200,230,255,0.4);
       border-radius: 10px;
       overflow: hidden;
     }
     .job-detail-block {
-      background: var(--white);
+      background: rgba(255,255,255,0.45);
       padding: 16px 18px;
     }
     .job-detail-block--wide {
@@ -570,11 +588,14 @@
       gap: 20px;
     }
     .benefit-item {
-      background: var(--white);
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 10px;
       padding: 28px 20px;
       text-align: center;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.12);
       transition: transform 0.2s;
     }
     .benefit-item:hover { transform: translateY(-4px); }
@@ -589,10 +610,13 @@
       gap: 28px;
     }
     .voice-card {
-      background: var(--white);
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 12px;
       padding: 32px 28px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     }
     .voice-quote { font-size: 2.5rem; color: var(--accent); line-height: 1; margin-bottom: 12px; }
     .voice-card blockquote {
@@ -622,7 +646,9 @@
     .contact-info {
       max-width: 700px;
       margin: 0 auto 32px;
-      background: var(--primary);
+      background: rgba(12,26,46,0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       border-radius: 10px;
       padding: 20px 32px;
       display: flex;
@@ -637,10 +663,13 @@
     .form-wrapper {
       max-width: 700px;
       margin: 0 auto;
-      background: var(--white);
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 16px;
       padding: 48px 52px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.15);
     }
     .form-group { margin-bottom: 24px; }
     .form-group label {
@@ -899,7 +928,9 @@
 
     /* ===== こんな方へセクション ===== */
     .persona-section {
-      background: var(--primary);
+      background: rgba(12,26,46,0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       border-radius: 14px;
       padding: 36px 40px;
       margin-bottom: 48px;
