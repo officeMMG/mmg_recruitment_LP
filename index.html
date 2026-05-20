@@ -195,17 +195,24 @@
       position: fixed;
       inset: 0;
       z-index: -1;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
     }
     .page-bg-slide {
       position: absolute;
       inset: 0;
       background-size: cover;
       background-position: center;
+      background-color: #071020;
       opacity: 0;
       transition: opacity 1.8s ease-in-out;
     }
-    @media (max-width: 768px) and (orientation: portrait) {
-      .page-bg-slide { background-position: center 30%; }
+    @media (max-width: 768px) {
+      .page-bg-slide {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
     }
     .page-bg-slide.active { opacity: 1; }
     .hero-content { position: relative; z-index: 2; }
