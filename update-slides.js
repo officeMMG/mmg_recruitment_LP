@@ -22,7 +22,7 @@ const newBlock = `  <div class="page-bg-slides">\n${slides}\n  </div>`;
 
 let html = fs.readFileSync(HTML_FILE, 'utf8');
 const updated = html.replace(
-  /  <div class="page-bg-slides">[\s\S]*?<\/div>/,
+  /  <div class="page-bg-slides">[\s\S]*?\n  <\/div>/,
   newBlock
 );
 
