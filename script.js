@@ -31,7 +31,19 @@ fetch('data/voices.json')
     slides[current].classList.remove('active');
     current = (current + 1) % slides.length;
     slides[current].classList.add('active');
-  }, 5000); // 5秒ごとに切り替え
+  }, 5000);
+
+  // iOS Safari では position:fixed がスクロールと一緒に動くバグがあるため
+  // position:absolute に切り替えてスクロール量で補正する
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const bg = document.querySelector('.page-bg-slides');
+  if (isIOS && bg) {
+    bg.style.position = 'absolute';
+    const fix = () => { bg.style.top = window.pageYOffset + 'px'; };
+    window.addEventListener('scroll', fix, { passive: true });
+    fix();
+  }
 })();
 
 /* ===== ヘッダー スクロール連動 ===== */
