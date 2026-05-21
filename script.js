@@ -32,25 +32,25 @@ fetch('data/voices.json')
     current = (current + 1) % slides.length;
     slides[current].classList.add('active');
   }, 5000);
-
-  // iOS Safari では position:fixed がスクロールと一緒に動くバグがあるため
-  // position:absolute に切り替えてスクロール量で補正する
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const bg = document.querySelector('.page-bg-slides');
-  if (isIOS && bg) {
-    bg.style.position = 'absolute';
-    const fix = () => { bg.style.top = window.pageYOffset + 'px'; };
-    window.addEventListener('scroll', fix, { passive: true });
-    fix();
-  }
 })();
 
 /* ===== ヘッダー スクロール連動 ===== */
+const wrapper = document.getElementById('page-wrapper');
 const header = document.getElementById('site-header');
-const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 30);
-window.addEventListener('scroll', onScroll);
+const onScroll = () => header.classList.toggle('scrolled', wrapper.scrollTop > 30);
+wrapper.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
+
+/* ===== アンカーリンクのスムーズスクロール ===== */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
 
 /* ===== ハンバーガーメニュー ===== */
 const hamburger = document.getElementById('hamburger');
@@ -58,13 +58,13 @@ const mobileNav = document.getElementById('mobile-nav');
 hamburger.addEventListener('click', () => {
   const isOpen = hamburger.classList.toggle('open');
   mobileNav.classList.toggle('open', isOpen);
-  document.body.style.overflow = isOpen ? 'hidden' : '';
+  wrapper.style.overflowY = isOpen ? 'hidden' : 'scroll';
 });
 document.querySelectorAll('.mobile-nav-link').forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('open');
     mobileNav.classList.remove('open');
-    document.body.style.overflow = '';
+    wrapper.style.overflowY = 'scroll';
   });
 });
 

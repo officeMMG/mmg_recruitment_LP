@@ -10,19 +10,26 @@
   <style>
     /* ===== リセット & 基本設定 ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; background: #071020; overflow-x: hidden; }
+    html { font-size: 16px; background: #071020; overflow: hidden; height: 100%; }
     body {
       font-family: 'M PLUS Rounded 1c', sans-serif;
       color: #0f172a;
       font-weight: 500;
       background: transparent;
       line-height: 1.8;
-      overflow-x: hidden;
+      overflow: hidden;
+      height: 100%;
       word-break: break-word;
       overflow-wrap: break-word;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+    }
+    #page-wrapper {
+      height: 100%;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
     }
     img { max-width: 100%; height: auto; display: block; }
     a { text-decoration: none; color: inherit; }
@@ -196,19 +203,30 @@
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       z-index: -1;
-      will-change: transform;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
     }
     .page-bg-slide {
       position: absolute;
       inset: 0;
-      background-size: cover;
-      background-position: center;
+      overflow: hidden;
       opacity: 0;
       transition: opacity 1.8s ease-in-out;
     }
     .page-bg-slide.active { opacity: 1; }
+    .slide-blur {
+      position: absolute;
+      inset: -40px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(28px) brightness(0.55);
+    }
+    .slide-sharp {
+      position: absolute;
+      inset: 0;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
     .hero-content { position: relative; z-index: 2; }
     .hero-badge {
       display: inline-block;
@@ -1019,12 +1037,29 @@
 
   <!-- 全ページ固定背景スライドショー -->
   <div class="page-bg-slides">
-    <div class="page-bg-slide" style="background-image:url('image/作業写真/DSC_2482.jpg')"></div>
-    <div class="page-bg-slide" style="background-image:url('image/作業写真/office M・M・G co.Ltdポスター１.png')"></div>
-    <div class="page-bg-slide" style="background-image:url('image/作業写真/森の中の測量作業.png')"></div>
-    <div class="page-bg-slide" style="background-image:url('image/作業写真/横断.jpg')"></div>
-    <div class="page-bg-slide" style="background-image:url('image/作業写真/立木調査.jfif')"></div>
+    <div class="page-bg-slide">
+      <div class="slide-blur" style="background-image:url('image/作業写真/DSC_2482.jpg')"></div>
+      <div class="slide-sharp" style="background-image:url('image/作業写真/DSC_2482.jpg')"></div>
+    </div>
+    <div class="page-bg-slide">
+      <div class="slide-blur" style="background-image:url('image/作業写真/office M・M・G co.Ltdポスター１.png')"></div>
+      <div class="slide-sharp" style="background-image:url('image/作業写真/office M・M・G co.Ltdポスター１.png')"></div>
+    </div>
+    <div class="page-bg-slide">
+      <div class="slide-blur" style="background-image:url('image/作業写真/森の中の測量作業.png')"></div>
+      <div class="slide-sharp" style="background-image:url('image/作業写真/森の中の測量作業.png')"></div>
+    </div>
+    <div class="page-bg-slide">
+      <div class="slide-blur" style="background-image:url('image/作業写真/横断.jpg')"></div>
+      <div class="slide-sharp" style="background-image:url('image/作業写真/横断.jpg')"></div>
+    </div>
+    <div class="page-bg-slide">
+      <div class="slide-blur" style="background-image:url('image/作業写真/立木調査.jfif')"></div>
+      <div class="slide-sharp" style="background-image:url('image/作業写真/立木調査.jfif')"></div>
+    </div>
   </div>
+
+  <div id="page-wrapper">
 
   <!-- フローティング応募ボタン（ヒーロー通過後に表示） -->
   <a href="#contact" class="float-apply" id="float-apply">今すぐ応募する ↗</a>
@@ -1548,6 +1583,8 @@
       &copy; 2026 株式会社office M・M・G All Rights Reserved.
     </div>
   </footer>
+
+  </div><!-- /#page-wrapper -->
 
   <script src="script.js"></script>
 

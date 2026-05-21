@@ -15,7 +15,10 @@ if (files.length === 0) {
 }
 
 const slides = files
-  .map(f => `    <div class="page-bg-slide" style="background-image:url('image/作業写真/${f}')"></div>`)
+  .map(f => {
+    const url = `url('image/作業写真/${f}')`;
+    return `    <div class="page-bg-slide">\n      <div class="slide-blur" style="background-image:${url}"></div>\n      <div class="slide-sharp" style="background-image:${url}"></div>\n    </div>`;
+  })
   .join('\n');
 
 const newBlock = `  <div class="page-bg-slides">\n${slides}\n  </div>`;
