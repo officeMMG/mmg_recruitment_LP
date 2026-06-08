@@ -89,14 +89,6 @@ const form = document.getElementById('contact-form');
 const formSuccess = document.getElementById('form-success');
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// ---------------------------------------------------------------
-// Formspree 設定
-// 1. https://formspree.io にアクセスしてアカウント作成（無料）
-// 2. 「New Form」を作成し、送信先メールアドレスを登録
-// 3. 発行された8文字のフォームIDを下記 FORMSPREE_ID に貼り付ける
-// 例: const FORMSPREE_ID = 'xabc1234';
-// ---------------------------------------------------------------
-const FORMSPREE_ID = 'YOUR_FORM_ID';
 
 function setError(fieldId, errId, show) {
   document.getElementById(fieldId).classList.toggle('is-error', show);
@@ -127,19 +119,17 @@ form.addEventListener('submit', async e => {
   btn.classList.add('loading');
   btn.disabled = true;
 
-  // Formspree IDが未設定の場合はデモ動作（実際は送信されません）
-  if (FORMSPREE_ID === 'YOUR_FORM_ID') {
-    await new Promise(r => setTimeout(r, 800));
-    form.style.display = 'none';
-    formSuccess.style.display = 'block';
-    return;
-  }
-
   try {
-    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    const res = await fetch('/api/contact', {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name:    document.getElementById('name').value.trim(),
+        email:   document.getElementById('email').value.trim(),
+        tel:     document.getElementById('tel').value.trim(),
+        job:     document.getElementById('job').value,
+        message: document.getElementById('message').value.trim(),
+      }),
     });
     if (res.ok) {
       form.style.display = 'none';
