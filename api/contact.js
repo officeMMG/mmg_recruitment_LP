@@ -76,8 +76,14 @@ module.exports = async function handler(req, res) {
     ],
   };
 
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.error('SLACK_WEBHOOK_URL is not set');
+    return res.status(500).json({ error: 'Webhook URL not configured' });
+  }
+
   try {
-    await postToSlack(process.env.SLACK_WEBHOOK_URL, payload);
+    await postToSlack(webhookUrl, payload);
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('Slack send error:', err);
