@@ -1,17 +1,42 @@
+const https = require('https');
+
 const JOB_LABELS = {
-  surveyor:     '測量士・測量士補（正社員）',
-  drone:        'ドローンオペレーター（正社員）',
-  'assist-full':'測量補助・事務スタッフ（正社員）',
-  'assist-part':'測量補助・事務スタッフ（パート）',
-  other:        'その他・一般問い合わせ',
+  surveyor:      '測量士・測量士補（正社員）',
+  drone:         'ドローンオペレーター（正社員）',
+  'assist-full': '測量補助・事務スタッフ（正社員）',
+  'assist-part': '測量補助・事務スタッフ（パート）',
+  other:         'その他・一般問い合わせ',
 };
 
-export default async function handler(req, res) {
+function postToSlack(webhookUrl, payload) {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify(payload);
+    const url = new URL(webhookUrl);
+    const options = {
+      hostname: url.hostname,
+      path: url.pathname,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(body),
+      },
+    };
+    const req = https.request(options, (res) => {
+      if (res.statusCode === 200) resolve();
+      else reject(new Error(`Slack status: ${res.statusCode}`));
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+}
+
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, tel, job, message, website } = req.body;
+  const { name, email, tel, job, message, website } = req.body || {};
 
   // ハニーポット：ボットが隠しフィールドに値を入れたらブロック
   if (website) {
@@ -52,17 +77,10 @@ export default async function handler(req, res) {
   };
 
   try {
-    const slackRes = await fetch(process.env.SLACK_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    if (!slackRes.ok) throw new Error(`Slack responded: ${slackRes.status}`);
-
+    await postToSlack(process.env.SLACK_WEBHOOK_URL, payload);
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('Slack send error:', err);
     return res.status(500).json({ error: 'Failed to notify' });
   }
-}
+};
