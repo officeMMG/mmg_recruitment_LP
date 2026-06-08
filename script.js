@@ -1,17 +1,20 @@
 /* ===== 先輩の声 — senpai_koe/voices.js の VOICES_DATA を使用 ===== */
-document.getElementById('voices-grid').innerHTML = VOICES_DATA.map(v => `
+document.getElementById('voices-grid').innerHTML = VOICES_DATA.map((v, i) => {
+  const initial = v.name.charAt(0);
+  return `
   <div class="voice-card">
-    <div class="voice-quote">"</div>
+    <span class="voice-num">0${i + 1}</span>
     <blockquote>${v.quote}</blockquote>
+    <div class="voice-divider"></div>
     <div class="voice-person">
-      <div class="voice-avatar">${v.avatar}</div>
+      <div class="voice-avatar"><span class="voice-initial">${initial}</span></div>
       <div>
         <div class="voice-name">${v.name}</div>
         <div class="voice-role">${v.role}</div>
       </div>
     </div>
   </div>
-`).join('');
+`}).join('');
 
 /* ===== 全ページ背景スライドショー ===== */
 (function () {
@@ -60,13 +63,26 @@ document.querySelectorAll('.mobile-nav-link').forEach(link => {
   });
 });
 
-/* ===== フローティング応募ボタン（ヒーロー通過後に表示） ===== */
+/* ===== フローティング応募ボタン（ヒーロー通過後に表示・お問い合わせ表示中は非表示） ===== */
 const floatApply = document.getElementById('float-apply');
 const heroSection = document.getElementById('hero');
-const heroObserver = new IntersectionObserver(([entry]) => {
-  floatApply.classList.toggle('visible', !entry.isIntersecting);
-}, { threshold: 0 });
-heroObserver.observe(heroSection);
+const contactSection = document.getElementById('contact');
+let heroGone = false;
+let contactVisible = false;
+
+const updateFloatButton = () => {
+  floatApply.classList.toggle('visible', heroGone && !contactVisible);
+};
+
+new IntersectionObserver(([entry]) => {
+  heroGone = !entry.isIntersecting;
+  updateFloatButton();
+}, { threshold: 0 }).observe(heroSection);
+
+new IntersectionObserver(([entry]) => {
+  contactVisible = entry.isIntersecting;
+  updateFloatButton();
+}, { threshold: 0 }).observe(contactSection);
 
 /* ===== お問い合わせフォーム ===== */
 const form = document.getElementById('contact-form');
@@ -138,6 +154,52 @@ form.addEventListener('submit', async e => {
     alert('送信に失敗しました。お電話（0771-56-8323）またはお時間をおいて再度お試しください。');
   }
 });
+
+/* ===== プライバシーモーダル ===== */
+(function () {
+  const overlay     = document.getElementById('privacy-overlay');
+  const body        = document.getElementById('privacy-body');
+  const check       = document.getElementById('privacy-check');
+  const hint        = document.getElementById('privacy-hint');
+  const closeBtn    = document.getElementById('privacy-close');
+  const openLink    = document.getElementById('open-privacy');
+  const agreeMain   = document.getElementById('agree');
+
+  function openModal() {
+    overlay.classList.add('open');
+    check.checked  = false;
+    check.disabled = true;
+    hint.classList.remove('hidden');
+    body.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  openLink.addEventListener('click', e => { e.preventDefault(); openModal(); });
+
+  closeBtn.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+
+  body.addEventListener('scroll', () => {
+    if (body.scrollTop + body.clientHeight >= body.scrollHeight - 40) {
+      check.disabled = false;
+      hint.classList.add('hidden');
+    }
+  });
+
+  check.addEventListener('change', () => {
+    if (check.checked) {
+      agreeMain.checked = true;
+      setError('agree', 'err-agree', false);
+      setTimeout(closeModal, 300);
+    }
+  });
+})();
 
 /* ===== リアルタイムバリデーション ===== */
 document.getElementById('name').addEventListener('input',    function() { setError('name',    'err-name',    this.value.trim() === ''); });

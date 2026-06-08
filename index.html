@@ -35,13 +35,14 @@
     a { text-decoration: none; color: inherit; }
 
     :root {
-      --primary: #0c1a2e;
-      --primary-light: #1a3050;
-      --accent: #38bdf8;
+      --primary: #0a1628;
+      --primary-light: #1a3a5c;
+      --accent: #0ea5e9;
+      --accent-2: #f97316;
       --accent-light: #7dd3fc;
       --bg-gray: #f0f9ff;
       --text-dark: #0f172a;
-      --text-mid: #0f172a;
+      --text-mid: #475569;
       --error: #e53e3e;
       --white: #fff;
     }
@@ -49,29 +50,34 @@
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
     .section-title {
       font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 700;
-      color: #fff;
+      font-weight: 800;
+      color: var(--primary);
       text-align: center;
       margin-bottom: 12px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      text-shadow: 0 0 24px rgba(255,255,255,0.9), 0 1px 0 rgba(255,255,255,0.8);
+      letter-spacing: 0.03em;
     }
     .section-subtitle {
       text-align: center;
-      color: rgba(255,255,255,0.88);
+      color: var(--text-mid);
       margin-bottom: 56px;
-      font-size: 0.95rem;
-      text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      line-height: 1.9;
+      text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 8px rgba(255,255,255,0.9);
     }
     .section-title::after {
       content: '';
       display: block;
-      width: 48px;
-      height: 3px;
-      background: var(--accent);
-      margin: 12px auto 0;
+      width: 56px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      margin: 14px auto 0;
+      border-radius: 2px;
     }
-    section { padding: 96px 0; background: rgba(7,16,32,0.15); }
-    section:nth-child(even) { background: rgba(7,16,32,0.15); }
+    section { padding: 96px 0; background: rgba(255,255,255,0.70); }
+    section:nth-child(even) { background: rgba(240,249,255,0.72); }
 
     /* ===== ヘッダー ===== */
     #site-header {
@@ -193,7 +199,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(7, 16, 32, 0.62);
+      background: rgba(5, 12, 25, 0.58);
       z-index: 1;
       pointer-events: none;
     }
@@ -218,7 +224,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      filter: blur(28px) brightness(0.55);
+      filter: blur(18px) brightness(0.60);
     }
     .slide-sharp {
       position: absolute;
@@ -230,15 +236,16 @@
     .hero-content { position: relative; z-index: 2; }
     .hero-badge {
       display: inline-block;
-      background: rgba(56,189,248,0.15);
-      border: 1px solid var(--accent);
-      color: var(--accent);
+      background: linear-gradient(135deg, var(--accent-2), #fbbf24);
+      border: none;
+      color: #fff;
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.12em;
-      padding: 6px 20px;
+      padding: 7px 22px;
       border-radius: 20px;
       margin-bottom: 28px;
+      box-shadow: 0 4px 16px rgba(249,115,22,0.4);
     }
     .hero-title {
       font-size: clamp(2rem, 5vw, 3.4rem);
@@ -249,39 +256,47 @@
     }
     .hero-title em {
       font-style: normal;
-      color: var(--accent);
+      animation: colorShift 16s ease-in-out infinite;
+    }
+    @keyframes colorShift {
+      0%   { color: #38d9f5; }
+      33%  { color: #fbbf24; }
+      66%  { color: #f97316; }
+      100% { color: #38d9f5; }
     }
     .hero-catch {
       font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.14em;
       margin-bottom: 12px;
       font-weight: 500;
     }
     .hero-sub {
-      font-size: clamp(0.9rem, 2vw, 1rem);
-      color: rgba(255,255,255,0.7);
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      color: rgba(255,255,255,0.88);
+      line-height: 2.0;
+      letter-spacing: 0.06em;
       margin-bottom: 48px;
-      max-width: 520px;
+      max-width: 560px;
       margin-left: auto;
       margin-right: auto;
     }
     .btn-primary {
       display: inline-block;
-      background: var(--accent);
-      color: var(--primary);
+      background: linear-gradient(135deg, var(--accent-2) 0%, #fbbf24 100%);
+      color: #fff;
       font-size: 1rem;
       font-weight: 700;
-      padding: 16px 48px;
+      padding: 16px 52px;
       border-radius: 40px;
       letter-spacing: 0.06em;
-      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-      box-shadow: 0 4px 20px rgba(56,189,248,0.35);
+      transition: filter 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 6px 24px rgba(249,115,22,0.45);
     }
     .btn-primary:hover {
-      background: var(--accent-light);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(56,189,248,0.45);
+      filter: brightness(1.08);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(249,115,22,0.55), 0 0 24px rgba(249,115,22,0.35);
     }
     .hero-scroll {
       position: absolute;
@@ -289,7 +304,7 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.55);
       font-size: 0.72rem;
       letter-spacing: 0.15em;
       display: flex;
@@ -301,7 +316,7 @@
       content: '';
       width: 1px;
       height: 40px;
-      background: rgba(7,16,32,0.15);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
       animation: scrollLine 1.8s ease-in-out infinite;
     }
     @keyframes scrollLine {
@@ -317,10 +332,11 @@
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       align-items: start;
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.12);
       border-radius: 16px;
       padding: 40px;
+      box-shadow: 0 4px 24px rgba(10,22,40,0.08);
     }
     .about-text h3 {
       font-size: 1.2rem;
@@ -332,53 +348,68 @@
 
     /* 社訓ブロック */
     .shakkun {
-      background: rgba(12,26,46,0.65);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       color: var(--white);
       border-radius: 10px;
       padding: 24px 28px;
       margin-bottom: 20px;
+      border-left: 4px solid var(--accent-2);
+      box-shadow: 0 4px 18px rgba(10,22,40,0.18);
     }
     .shakkun h4 {
       font-size: 0.78rem;
       letter-spacing: 0.12em;
-      color: var(--accent);
+      color: #fbbf24;
       margin-bottom: 12px;
     }
     .shakkun p {
       color: var(--white);
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-      font-weight: 500;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      line-height: 1.6;
     }
 
     /* 会社概要テーブル */
-    .company-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    .company-table tr { border-bottom: 1px solid #e5e7eb; }
+    .company-table { width: 100%; border-collapse: collapse; }
+    .company-table tr { border-bottom: 1px solid rgba(56,189,248,0.12); }
+    .company-table tr:last-child { border-bottom: none; }
     .company-table th {
       text-align: left;
-      padding: 12px 16px 12px 0;
-      color: var(--primary);
+      padding: 13px 16px 13px 12px;
+      font-size: 0.68rem;
       font-weight: 700;
-      width: 110px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      width: 120px;
       white-space: nowrap;
       vertical-align: top;
+      position: relative;
     }
-    .company-table td { padding: 12px 0; color: var(--text-mid); }
+    .company-table th::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%; transform: translateY(-50%);
+      width: 3px; height: 14px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .company-table td { padding: 13px 0; color: var(--primary); font-weight: 600; font-size: 0.9rem; line-height: 1.7; }
 
     /* ===== 事業内容 ===== */
-    #business { background: rgba(7,16,32,0.15); }
     .business-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
     .business-card {
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.12);
       border-radius: 12px;
       padding: 32px 24px;
       text-align: center;
-      box-shadow: 0 3px 18px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 20px rgba(10,22,40,0.08);
       transition: transform 0.25s, box-shadow 0.25s;
       position: relative;
       overflow: hidden;
@@ -388,9 +419,9 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 4px;
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
-    .business-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+    .business-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10,22,40,0.12), 0 0 20px rgba(14,165,233,0.2); }
     .business-icon {
       width: 72px;
       height: 72px;
@@ -459,7 +490,7 @@
       background: var(--white);
       border-radius: 12px;
       padding: 36px 28px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(10,22,40,0.08);
       transition: transform 0.25s, box-shadow 0.25s;
       position: relative;
       overflow: hidden;
@@ -469,9 +500,9 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 4px;
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
-    .job-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,0.13); }
+    .job-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10,22,40,0.12), 0 0 20px rgba(14,165,233,0.2); }
     .job-icon { font-size: 2.5rem; margin-bottom: 16px; }
     .job-card h3 { font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
     .job-tag {
@@ -502,10 +533,11 @@
       font-size: 0.95rem;
       margin-bottom: 40px;
       line-height: 1.9;
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.15);
       border-radius: 10px;
       padding: 20px 32px;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.06);
     }
 
     /* 2カラム求人グリッド */
@@ -519,10 +551,10 @@
     /* 求人カード共通 */
     .job-single-wrap { max-width: 860px; margin: 0 auto; }
     .job-card-full {
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.12);
       border-radius: 16px;
-      box-shadow: 0 6px 32px rgba(0,0,0,0.15);
+      box-shadow: 0 6px 28px rgba(10,22,40,0.10);
       overflow: hidden;
       position: relative;
     }
@@ -531,7 +563,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 5px;
-      background: var(--accent);
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
     }
     .job-card-header {
       display: flex;
@@ -577,28 +609,35 @@
     .job-detail-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: rgba(200,230,255,0.3);
-      border: 1px solid rgba(200,230,255,0.4);
-      border-radius: 10px;
-      overflow: hidden;
+      gap: 8px;
     }
     .job-detail-block {
-      background: rgba(255,255,255,0.65);
-      padding: 16px 18px;
+      background: rgba(14,165,233,0.05);
+      border: 1px solid rgba(14,165,233,0.15);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 14px 18px;
+      transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    .job-detail-block:hover {
+      background: rgba(14,165,233,0.08);
+      border-color: rgba(14,165,233,0.3);
+      border-left-color: var(--accent-2);
+      box-shadow: 0 4px 14px rgba(14,165,233,0.12);
     }
     .job-detail-block--wide {
       grid-column: 1 / -1;
     }
     .job-detail-block h4 {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 0.08em;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       margin-bottom: 6px;
     }
-    .job-detail-block p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
-    .job-detail-block small { font-size: 0.76rem; color: #888; }
+    .job-detail-block p { font-size: 0.95rem; color: var(--primary); font-weight: 700; line-height: 1.6; }
+    .job-detail-block small { font-size: 0.74rem; color: var(--text-mid); font-weight: 400; }
 
     /* ===== 待遇・福利厚生 ===== */
     .benefits-grid {
@@ -607,18 +646,47 @@
       gap: 20px;
     }
     .benefit-item {
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 10px;
-      padding: 28px 20px;
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.12);
+      border-radius: 12px;
+      padding: 32px 22px 28px;
       text-align: center;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.12);
-      transition: transform 0.2s;
+      box-shadow: 0 4px 20px rgba(10,22,40,0.07);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
-    .benefit-item:hover { transform: translateY(-4px); }
-    .benefit-icon { font-size: 2.2rem; margin-bottom: 12px; }
-    .benefit-item h4 { font-size: 0.92rem; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
-    .benefit-item p { font-size: 0.83rem; color: var(--text-mid); }
+    .benefit-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .benefit-item:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10,22,40,0.11), 0 0 20px rgba(14,165,233,0.18); }
+    .benefit-num {
+      position: absolute;
+      top: 14px; right: 18px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(249,115,22,0.38);
+    }
+    .benefit-icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 18px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(56,189,248,0.25);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .benefit-item:hover .benefit-icon {
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 8px 28px rgba(56,189,248,0.45);
+    }
+    .benefit-item h4 { font-size: 0.96rem; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+    .benefit-item p { font-size: 0.83rem; color: var(--text-mid); line-height: 1.75; }
 
     /* ===== 先輩の声 ===== */
     .voices-grid {
@@ -627,60 +695,92 @@
       gap: 28px;
     }
     .voice-card {
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 12px;
-      padding: 32px 28px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.12);
+      border-radius: 14px;
+      padding: 36px 28px 28px;
+      box-shadow: 0 4px 20px rgba(10,22,40,0.07);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
     }
-    .voice-quote { font-size: 2.5rem; color: var(--accent); line-height: 1; margin-bottom: 12px; }
+    .voice-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), transparent);
+    }
+    .voice-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(10,22,40,0.11), 0 0 18px rgba(14,165,233,0.15);
+    }
+    .voice-num {
+      position: absolute;
+      top: 14px; right: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: rgba(14,165,233,0.40);
+    }
     .voice-card blockquote {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--text-mid);
       margin-bottom: 20px;
       font-style: normal;
-      line-height: 1.85;
+      line-height: 1.9;
+    }
+    .voice-divider {
+      width: 36px; height: 2px;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      margin-bottom: 16px;
     }
     .voice-person { display: flex; align-items: center; gap: 14px; }
     .voice-avatar {
-      width: 48px;
-      height: 48px;
+      width: 52px; height: 52px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
+      background: linear-gradient(135deg, var(--primary) 0%, #1e4a7a 100%);
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
+      border: 2px solid rgba(14,165,233,0.45);
+      box-shadow: 0 0 10px rgba(14,165,233,0.2);
+    }
+    .voice-initial {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0;
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(14,165,233,0.5);
     }
     .voice-name { font-weight: 700; font-size: 0.9rem; color: var(--primary); }
     .voice-role { font-size: 0.78rem; color: var(--text-mid); }
 
     /* ===== お問い合わせ ===== */
-    #contact { background: rgba(7,16,32,0.15); }
     .contact-info {
       max-width: 700px;
       margin: 0 auto 32px;
-      background: rgba(12,26,46,0.65);
-      border-radius: 10px;
-      padding: 20px 32px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 12px;
+      padding: 22px 32px;
       display: flex;
       gap: 40px;
       justify-content: center;
       flex-wrap: wrap;
+      box-shadow: 0 6px 24px rgba(10,22,40,0.18);
     }
     .contact-info-item { text-align: center; color: var(--white); }
-    .contact-info-item small { display: block; font-size: 0.72rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 4px; }
+    .contact-info-item small { display: block; font-size: 0.72rem; color: #fbbf24; letter-spacing: 0.08em; margin-bottom: 4px; }
     .contact-info-item span { font-size: 1rem; font-weight: 700; }
 
     .form-wrapper {
       max-width: 700px;
       margin: 0 auto;
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.80);
+      border: 1px solid rgba(14,165,233,0.12);
       border-radius: 16px;
       padding: 48px 52px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 32px rgba(10,22,40,0.10);
     }
     .form-group { margin-bottom: 24px; }
     .form-group label {
@@ -726,7 +826,7 @@
     .form-control:focus {
       outline: none;
       border-color: var(--primary);
-      background: #fff;
+      background: rgba(255,255,255,0.80);
       box-shadow: 0 0 0 3px rgba(12,26,46,0.08);
     }
     .form-control.is-error { border-color: var(--error); }
@@ -758,7 +858,7 @@
     .btn-submit {
       width: 100%;
       padding: 16px;
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       color: var(--white);
       border: none;
       border-radius: 8px;
@@ -767,10 +867,10 @@
       font-weight: 700;
       letter-spacing: 0.06em;
       cursor: pointer;
-      transition: background 0.25s, transform 0.2s;
+      transition: filter 0.25s, transform 0.2s, box-shadow 0.25s;
       margin-top: 8px;
     }
-    .btn-submit:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .btn-submit:hover { filter: brightness(1.15); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(10,22,40,0.25); }
     .btn-submit:active { transform: translateY(0); }
 
     #form-success {
@@ -879,17 +979,17 @@
       bottom: 32px;
       right: 32px;
       z-index: 9000;
-      background: var(--accent);
-      color: var(--primary);
+      background: linear-gradient(135deg, var(--accent-2), #fbbf24);
+      color: #fff;
       font-weight: 700;
       font-size: 0.92rem;
       padding: 14px 30px;
       border-radius: 40px;
-      box-shadow: 0 6px 28px rgba(56,189,248,0.55);
+      box-shadow: 0 6px 28px rgba(249,115,22,0.5);
       letter-spacing: 0.05em;
       opacity: 0;
       transform: translateY(16px);
-      transition: opacity 0.3s, transform 0.3s, background 0.2s, box-shadow 0.2s;
+      transition: opacity 0.3s, transform 0.3s, filter 0.2s, box-shadow 0.2s;
       pointer-events: none;
       text-decoration: none;
       display: inline-block;
@@ -901,9 +1001,9 @@
       pointer-events: auto;
     }
     .float-apply:hover {
-      background: var(--accent-light);
-      box-shadow: 0 8px 36px rgba(56,189,248,0.7);
-      color: var(--primary);
+      filter: brightness(1.08);
+      box-shadow: 0 10px 40px rgba(249,115,22,0.6);
+      color: #fff;
     }
     @media (max-width: 767px) {
       .float-apply { bottom: 20px; right: 16px; left: 16px; text-align: center; border-radius: 12px; }
@@ -914,22 +1014,22 @@
       display: block;
       margin: 20px 40px 40px;
       padding: 14px 0;
-      background: var(--accent);
-      color: var(--primary);
+      background: linear-gradient(135deg, var(--accent), #06b6d4);
+      color: #fff;
       text-align: center;
       border-radius: 8px;
       font-weight: 700;
       font-size: 0.95rem;
       letter-spacing: 0.05em;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
       text-decoration: none;
-      box-shadow: 0 3px 14px rgba(56,189,248,0.35);
+      box-shadow: 0 4px 16px rgba(14,165,233,0.35);
     }
     .btn-apply-card:hover {
-      background: var(--accent-light);
+      filter: brightness(1.08);
       transform: translateY(-2px);
-      box-shadow: 0 6px 22px rgba(56,189,248,0.5);
-      color: var(--primary);
+      box-shadow: 0 8px 28px rgba(14,165,233,0.45);
+      color: #fff;
     }
     @media (max-width: 767px) {
       .btn-apply-card { margin: 16px 24px 32px; }
@@ -945,7 +1045,7 @@
     }
     .form-assurance span {
       font-size: 0.82rem;
-      color: var(--text-mid);
+      color: rgba(255,255,255,0.88);
       font-weight: 500;
       display: flex;
       align-items: center;
@@ -961,19 +1061,21 @@
       margin-bottom: 24px;
     }
     .persona-tag {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(7,16,32,0.15);
-      color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.92);
       font-size: 0.78rem;
       font-weight: 600;
       padding: 5px 16px;
       border-radius: 20px;
       letter-spacing: 0.06em;
+      backdrop-filter: blur(4px);
     }
 
     /* ===== こんな方へセクション ===== */
     .persona-section {
-      background: rgba(12,26,46,0.65);
+      background: linear-gradient(135deg, rgba(14,165,233,0.20) 0%, rgba(249,115,22,0.14) 100%);
+      border: 1.5px solid rgba(14,165,233,0.18);
       border-radius: 14px;
       padding: 36px 40px;
       margin-bottom: 48px;
@@ -981,7 +1083,7 @@
     .persona-section h3 {
       font-size: 1rem;
       font-weight: 700;
-      color: var(--accent);
+      color: var(--primary);
       letter-spacing: 0.1em;
       margin-bottom: 20px;
       text-align: center;
@@ -995,13 +1097,13 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      color: var(--white);
+      color: var(--text-dark);
       font-size: 0.9rem;
       line-height: 1.6;
     }
     .persona-check::before {
       content: '✓';
-      color: var(--accent);
+      color: var(--accent-2);
       font-weight: 700;
       font-size: 1rem;
       flex-shrink: 0;
@@ -1010,6 +1112,111 @@
     @media (max-width: 767px) {
       .persona-section { padding: 28px 20px; }
       .persona-checks { grid-template-columns: 1fr; }
+    }
+
+    /* ===== プライバシーモーダル ===== */
+    .privacy-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .privacy-overlay.open { display: flex; }
+    .privacy-modal {
+      background: rgba(255,255,255,0.80);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .privacy-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 28px;
+      border-bottom: 1px solid #e5e7eb;
+      flex-shrink: 0;
+    }
+    .privacy-modal-header h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .privacy-modal-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #999;
+      padding: 4px 8px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .privacy-modal-close:hover { color: var(--primary); }
+    .privacy-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px;
+      font-size: 0.88rem;
+      color: #374151;
+      line-height: 1.9;
+    }
+    .privacy-modal-body h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 20px 0 8px;
+      padding-left: 10px;
+      border-left: 3px solid var(--accent);
+    }
+    .privacy-modal-body h3:first-child { margin-top: 0; }
+    .privacy-modal-body p { margin-bottom: 10px; }
+    .privacy-modal-body ul { padding-left: 20px; margin-bottom: 10px; }
+    .privacy-modal-body li { margin-bottom: 4px; }
+    .privacy-modal-footer {
+      padding: 18px 28px;
+      border-top: 2px solid var(--accent);
+      background: #f0f9ff;
+      flex-shrink: 0;
+    }
+    .privacy-scroll-hint {
+      font-size: 0.78rem;
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .privacy-scroll-hint.hidden { display: none; }
+    .privacy-agree-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .privacy-agree-row input[type="checkbox"] {
+      width: 20px; height: 20px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .privacy-agree-row input:disabled { opacity: 0.35; cursor: not-allowed; }
+    .privacy-agree-row label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+    }
+    @media (max-width: 767px) {
+      .privacy-overlay { padding: 12px; }
+      .privacy-modal-body { padding: 18px 16px; }
+      .privacy-modal-header { padding: 16px; }
+      .privacy-modal-footer { padding: 14px 16px; }
     }
 
     /* ===== 送信ボタン ローディング状態 ===== */
@@ -1068,7 +1275,7 @@
   <header id="site-header">
     <div class="header-inner">
       <div class="header-logo">
-        <img src="image/会社ロゴ.jfif" alt="M・M・G ロゴ">
+        <img src="image/ロゴ_transparent.png" alt="M・M・G ロゴ">
         <div>
           株式会社 office <span style="color:var(--accent)">M・M・G</span>
           <small>地球を視て、測る仕事</small>
@@ -1107,7 +1314,7 @@
       <div class="hero-content">
         <div class="hero-badge">RECRUIT 2026</div>
         <div class="persona-tags">
-          <span class="persona-tag">20〜40代活躍中</span>
+          <span class="persona-tag">20〜60代活躍中</span>
           <span class="persona-tag">未経験・異業種OK</span>
           <span class="persona-tag">高卒以上歓迎</span>
           <span class="persona-tag">男女ともに活躍</span>
@@ -1117,9 +1324,7 @@
           測量の技術で、<br><em>社会のインフラ</em>を守る。
         </h1>
         <p class="hero-sub">
-          株式会社office M・M・Gは、京都府亀岡市を拠点に<br>
-          測量・調査業務を通じて地域の発展を支えています。<br>
-          未経験からでも活躍できる環境で、共に成長できる仲間を募集しています。
+          株式会社office M・M・Gは、京都府亀岡市を拠点に測量・調査業務を通じて地域の発展を支えています。未経験からでも活躍できる環境で、共に成長できる仲間を募集しています。
         </p>
         <a href="#jobs" class="btn-primary">採用情報を見る</a>
       </div>
@@ -1283,7 +1488,7 @@
         <div class="persona-section">
           <h3>こんな方、ぜひご応募ください</h3>
           <div class="persona-checks">
-            <div class="persona-check">20〜40代で新しい仕事にチャレンジしたい</div>
+            <div class="persona-check">20〜60代で新しい仕事にチャレンジしたい</div>
             <div class="persona-check">測量・土木の経験はないが興味がある</div>
             <div class="persona-check">高卒以上で手に職をつけたい</div>
             <div class="persona-check">異業種・他職種からの転職を考えている</div>
@@ -1299,7 +1504,16 @@
           <!-- 未経験者 -->
           <div class="job-card-full">
             <div class="job-card-header">
-              <div class="job-icon-lg">📏</div>
+              <div class="job-icon-lg">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+                  <rect x="4" y="16" width="36" height="12" rx="3" stroke="#0c1a2e" stroke-width="2"/>
+                  <line x1="10" y1="16" x2="10" y2="22" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                  <line x1="16" y1="16" x2="16" y2="20" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                  <line x1="22" y1="16" x2="22" y2="22" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                  <line x1="28" y1="16" x2="28" y2="20" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                  <line x1="34" y1="16" x2="34" y2="22" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
               <div>
                 <h3>測量及び調査業務</h3>
                 <span class="job-tag">未経験者歓迎</span>
@@ -1354,7 +1568,14 @@
           <!-- 経験者 -->
           <div class="job-card-full">
             <div class="job-card-header">
-              <div class="job-icon-lg">📐</div>
+              <div class="job-icon-lg">
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+                  <path d="M6 38L38 38L38 6Z" stroke="#0c1a2e" stroke-width="2" stroke-linejoin="round"/>
+                  <polyline points="38,30 38,38 30,38" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M38 6L28 16" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 2"/>
+                  <polyline points="32,38 32,32 38,32" stroke="#38bdf8" stroke-width="1.4" fill="none"/>
+                </svg>
+              </div>
               <div>
                 <h3>測量及び調査業務</h3>
                 <span class="job-tag">経験者</span>
@@ -1401,7 +1622,7 @@
                 <h4>活躍できる方</h4>
                 <ul class="job-list">
                   <li>測量士補・測量士の資格保有者（優遇）</li>
-                  <li>CAD（AutoCAD・SiMAX等）の使用経験者</li>
+                  <li>CAD（TREND-ONE・TREND-POINT等）の使用経験者</li>
                   <li>ドローン操縦経験・UAV測量の知識をお持ちの方</li>
                 </ul>
               </div>
@@ -1421,32 +1642,87 @@
         <p class="section-subtitle">社員が長く安心して働けるための制度を整えています</p>
         <div class="benefits-grid">
           <div class="benefit-item">
-            <div class="benefit-icon">📅</div>
+            <span class="benefit-num">01</span>
+            <div class="benefit-icon">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="24" height="22" rx="3" stroke="white" stroke-width="1.8"/>
+                <line x1="3" y1="12" x2="27" y2="12" stroke="white" stroke-width="1.8"/>
+                <line x1="9" y1="3" x2="9" y2="8" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                <line x1="21" y1="3" x2="21" y2="8" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 19l2 2 4-4" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 19l2 2 4-4" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <h4>週休2日制</h4>
             <p>土日・祝日休み。測量業務の特性に合わせた柔軟なシフト対応も行います。</p>
           </div>
           <div class="benefit-item">
-            <div class="benefit-icon">🏥</div>
+            <span class="benefit-num">02</span>
+            <div class="benefit-icon">
+              <svg width="26" height="30" viewBox="0 0 26 30" fill="none" aria-hidden="true">
+                <path d="M13 2L24 7v9c0 7-5 12-11 13C6 28 1 23 1 16V7Z" stroke="white" stroke-width="1.8" fill="none"/>
+                <path d="M7 15l4 4 8-8" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <h4>社会保険完備</h4>
             <p>健康保険・厚生年金・雇用保険・労災保険をすべて完備しています。</p>
           </div>
           <div class="benefit-item">
-            <div class="benefit-icon">📚</div>
+            <span class="benefit-num">03</span>
+            <div class="benefit-icon">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="24" rx="2" stroke="white" stroke-width="1.8"/>
+                <line x1="6" y1="10" x2="18" y2="10" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="6" y1="15" x2="18" y2="15" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="6" y1="20" x2="13" y2="20" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="24" cy="23" r="5.5" fill="rgba(56,189,248,0.15)" stroke="#38bdf8" stroke-width="1.5"/>
+                <path d="M21.5 23l2 2 3.5-3" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
             <h4>資格取得支援</h4>
             <p>測量士・測量士補・ドローン操縦資格などの取得費用を会社がサポートします。</p>
           </div>
           <div class="benefit-item">
-            <div class="benefit-icon">🚗</div>
+            <span class="benefit-num">04</span>
+            <div class="benefit-icon">
+              <svg width="32" height="22" viewBox="0 0 32 22" fill="none" aria-hidden="true">
+                <path d="M4 13L8 5h16l4 8H4Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/>
+                <rect x="2" y="13" width="28" height="7" rx="2" stroke="white" stroke-width="1.8"/>
+                <circle cx="8" cy="20" r="2.5" stroke="#38bdf8" stroke-width="1.8"/>
+                <circle cx="24" cy="20" r="2.5" stroke="#38bdf8" stroke-width="1.8"/>
+                <line x1="11" y1="5" x2="13" y2="13" stroke="#38bdf8" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+                <line x1="21" y1="5" x2="19" y2="13" stroke="#38bdf8" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+              </svg>
+            </div>
             <h4>交通費・車両手当</h4>
             <p>通勤交通費を支給。現場への移動は社有車を使用するため車両費用の負担なし。</p>
           </div>
           <div class="benefit-item">
-            <div class="benefit-icon">📈</div>
+            <span class="benefit-num">05</span>
+            <div class="benefit-icon">
+              <svg width="30" height="28" viewBox="0 0 30 28" fill="none" aria-hidden="true">
+                <polyline points="2,22 8,14 14,18 22,8 28,4" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="22,4 28,4 28,10" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="2" y1="26" x2="28" y2="26" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                <rect x="3" y="18" width="4" height="8" rx="1" fill="white" fill-opacity="0.18" stroke="white" stroke-width="1"/>
+                <rect x="10" y="14" width="4" height="12" rx="1" fill="white" fill-opacity="0.18" stroke="white" stroke-width="1"/>
+                <rect x="17" y="9" width="4" height="17" rx="1" fill="white" fill-opacity="0.18" stroke="white" stroke-width="1"/>
+              </svg>
+            </div>
             <h4>昇給・賞与制度</h4>
             <p>年1回の昇給査定と賞与を支給。スキルアップや資格取得で給与へ反映します。</p>
           </div>
           <div class="benefit-item">
-            <div class="benefit-icon">🌱</div>
+            <span class="benefit-num">06</span>
+            <div class="benefit-icon">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+                <circle cx="11" cy="8" r="4" stroke="white" stroke-width="1.8"/>
+                <path d="M3 26c0-6 3.5-9 8-9s8 3 8 9" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="24" cy="10" r="5.5" fill="rgba(56,189,248,0.15)" stroke="#38bdf8" stroke-width="1.5"/>
+                <line x1="24" y1="7" x2="24" y2="13" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                <line x1="21" y1="10" x2="27" y2="10" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
             <h4>未経験者歓迎・OJT</h4>
             <p>異業種からの転職実績多数。先輩社員がマンツーマンで基礎から丁寧に指導します。</p>
           </div>
@@ -1518,9 +1794,9 @@
               <select id="job" name="job" class="form-control">
                 <option value="">-- 選択してください --</option>
                 <option value="surveyor">測量士・測量士補（正社員）</option>
-                <option value="drone">ドローンオペレーター（正社員）</option>
-                <option value="assist-full">測量補助・事務スタッフ（正社員）</option>
-                <option value="assist-part">測量補助・事務スタッフ（パート）</option>
+                <option value="drone" disabled>ドローンオペレーター（正社員）</option>
+                <option value="assist-full" disabled>測量補助・事務スタッフ（正社員）</option>
+                <option value="assist-part" disabled>測量補助・事務スタッフ（パート）</option>
                 <option value="other">その他・一般問い合わせ</option>
               </select>
               <p class="error-msg" id="err-job">応募職種を選択してください。</p>
@@ -1536,7 +1812,7 @@
               <div class="checkbox-group">
                 <input type="checkbox" id="agree" name="agree">
                 <label for="agree">
-                  <a href="#" onclick="return false;">個人情報の取り扱い</a>に同意する<span class="required-badge">必須</span>
+                  <a href="#" id="open-privacy">個人情報の取り扱い</a>を確認して同意する<span class="required-badge">必須</span>
                 </label>
               </div>
               <p class="error-msg" id="err-agree">個人情報の取り扱いへの同意が必要です。</p>
@@ -1560,7 +1836,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <div class="footer-logo"><img src="image/会社ロゴ.jfif" alt="M・M・G ロゴ">株式会社 office <span>M・M・G</span></div>
+        <div class="footer-logo"><img src="image/ロゴ_transparent.png" alt="M・M・G ロゴ">株式会社 office <span>M・M・G</span></div>
         <p>地球を視て、測る仕事</p>
       </div>
       <div class="footer-info">
@@ -1584,6 +1860,81 @@
   </footer>
 
   </div><!-- /#page-wrapper -->
+
+  <!-- ===== プライバシーポリシー モーダル ===== -->
+  <div class="privacy-overlay" id="privacy-overlay" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="privacy-modal">
+      <div class="privacy-modal-header">
+        <h2 id="privacy-title">個人情報保護方針（プライバシーポリシー）</h2>
+        <button class="privacy-modal-close" id="privacy-close" aria-label="閉じる">✕</button>
+      </div>
+      <div class="privacy-modal-body" id="privacy-body">
+
+        <p>株式会社office M・M・G（以下「当社」）は、採用活動およびお問い合わせを通じてご提供いただく個人情報を適切に保護することを重要な責務と考え、以下の方針に基づき取り扱います。</p>
+
+        <h3>第1条（個人情報の定義）</h3>
+        <p>個人情報とは、生存する個人に関する情報であって、氏名・メールアドレス・電話番号その他の記述により特定の個人を識別できるものをいいます。</p>
+
+        <h3>第2条（収集する情報）</h3>
+        <p>当社は、採用選考およびお問い合わせへの対応を目的として、以下の情報を収集します。</p>
+        <ul>
+          <li>氏名</li>
+          <li>メールアドレス</li>
+          <li>電話番号（任意）</li>
+          <li>応募職種</li>
+          <li>お問い合わせ内容</li>
+        </ul>
+
+        <h3>第3条（利用目的）</h3>
+        <p>収集した個人情報は、以下の目的にのみ使用します。</p>
+        <ul>
+          <li>採用選考に関するご連絡・手続き</li>
+          <li>お問い合わせへの回答・対応</li>
+          <li>採用に関する情報提供</li>
+          <li>上記に付随する業務</li>
+        </ul>
+
+        <h3>第4条（第三者への提供）</h3>
+        <p>当社は、以下のいずれかに該当する場合を除き、ご本人の同意なく個人情報を第三者に提供しません。</p>
+        <ul>
+          <li>法令に基づく場合</li>
+          <li>人の生命・身体・財産の保護のために必要な場合</li>
+          <li>国・地方公共団体またはその委託者が法令上の事務を遂行する場合</li>
+        </ul>
+
+        <h3>第5条（個人情報の管理）</h3>
+        <p>当社は、収集した個人情報の漏洩・滅失・毀損を防止するために適切な安全管理措置を講じます。個人情報へのアクセスは、業務上必要な担当者に限定します。また、利用目的が達成された個人情報は、速やかに適切な方法で廃棄します。</p>
+
+        <h3>第6条（開示・訂正・削除）</h3>
+        <p>ご本人から個人情報の開示・訂正・削除の請求があった場合は、本人確認のうえ合理的な期間内に対応します。お問い合わせは第8条の窓口までご連絡ください。</p>
+
+        <h3>第7条（Cookieの利用）</h3>
+        <p>当サイトはCookieを使用しておりません。</p>
+
+        <h3>第8条（お問い合わせ窓口）</h3>
+        <p>個人情報の取り扱いに関するご質問・ご相談は、以下の窓口までお問い合わせください。</p>
+        <p>
+          株式会社office M・M・G<br>
+          〒621-0013 京都府亀岡市大井町並河5丁目39番地<br>
+          TEL：0771-56-8323<br>
+          受付時間：平日 9:00〜18:00
+        </p>
+
+        <h3>第9条（改定）</h3>
+        <p>本ポリシーは、法令の改正や社内規程の変更に伴い、予告なく改定することがあります。改定後のポリシーは本サイトへの掲載をもって効力を生じるものとします。</p>
+
+        <p style="margin-top:20px;font-size:0.82rem;color:#9ca3af;">制定日：2026年6月1日　株式会社office M・M・G</p>
+
+      </div>
+      <div class="privacy-modal-footer">
+        <p class="privacy-scroll-hint" id="privacy-hint">▼ 最後までスクロールして内容をご確認ください</p>
+        <div class="privacy-agree-row">
+          <input type="checkbox" id="privacy-check" disabled>
+          <label for="privacy-check">上記の内容を確認し、同意します</label>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="senpai_koe/voices.js"></script>
   <script src="script.js"></script>
