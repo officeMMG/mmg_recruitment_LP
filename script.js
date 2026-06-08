@@ -129,6 +129,7 @@ form.addEventListener('submit', async e => {
         tel:     document.getElementById('tel').value.trim(),
         job:     document.getElementById('job').value,
         message: document.getElementById('message').value.trim(),
+        website: document.querySelector('input[name="website"]').value,
       }),
     });
     if (res.ok) {
