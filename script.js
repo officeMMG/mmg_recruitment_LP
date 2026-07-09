@@ -1,20 +1,129 @@
-/* ===== 先輩の声 — senpai_koe/voices.js の VOICES_DATA を使用 ===== */
-document.getElementById('voices-grid').innerHTML = VOICES_DATA.map((v, i) => {
-  const initial = v.name.charAt(0);
-  return `
-  <div class="voice-card">
-    <span class="voice-num">0${i + 1}</span>
-    <blockquote>${v.quote}</blockquote>
-    <div class="voice-divider"></div>
-    <div class="voice-person">
-      <div class="voice-avatar"><span class="voice-initial">${initial}</span></div>
-      <div>
-        <div class="voice-name">${v.name}</div>
-        <div class="voice-role">${v.role}</div>
+/* ===== カードデータ（事業内容・募集職種・待遇・先輩の声）=====
+   microCMS( /api/content?type=... )から取得。失敗時は data/*.json をフォールバックとして使用 */
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+function iconSvg(key) {
+  return (typeof ICONS !== 'undefined' && ICONS[key]) || '';
+}
+
+/* microCMSの「テキストエリア」フィールドは配列ではなく1本の文字列として保存されるため、
+   「1行に1つ」「カンマ区切り」の項目は表示時にこちらで分割する */
+function splitLines(str) {
+  return String(str ?? '').split('\n').map(s => s.trim()).filter(Boolean);
+}
+function splitCsv(str) {
+  return String(str ?? '').split(',').map(s => s.trim()).filter(Boolean);
+}
+
+function renderBusiness(el, contents) {
+  el.innerHTML = contents.map(c => `
+    <div class="business-card">
+      <div class="business-icon">${iconSvg(c.iconKey)}</div>
+      <h3>${escapeHtml(c.title)}</h3>
+      <ul class="business-list">${splitLines(c.items).map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+      ${c.note ? `<p class="business-etc">${escapeHtml(c.note)}</p>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderJobs(el, contents) {
+  el.innerHTML = contents.map(c => {
+    const qualificationNote = splitLines(c.qualificationNote);
+    const highlights = splitLines(c.highlights);
+    return `
+    <div class="job-card-full">
+      <div class="job-card-header">
+        <div class="job-icon-lg">${iconSvg(c.iconKey)}</div>
+        <div>
+          <h3>${escapeHtml(c.title)}</h3>
+          ${splitCsv(c.tags).map(t => `<span class="job-tag">${escapeHtml(t)}</span>`).join('')}
+        </div>
+      </div>
+      <div class="job-sections">
+        <div class="job-section">
+          <h4>仕事内容</h4>
+          <ul class="job-list">${splitLines(c.duties).map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>
+        </div>
+        <div class="job-detail-grid">
+          <div class="job-detail-block"><h4>基本給</h4><p>${escapeHtml(c.salaryBase)}</p></div>
+          <div class="job-detail-block"><h4>日給</h4><p>${escapeHtml(c.salaryDaily)}</p></div>
+          <div class="job-detail-block"><h4>年齢</h4><p>${escapeHtml(c.age)}</p></div>
+          <div class="job-detail-block job-detail-block--wide">
+            <h4>必要な資格・免許</h4>
+            <p>${escapeHtml(c.qualification)}${qualificationNote.length ? `<br><small>${qualificationNote.map(escapeHtml).join('<br>')}</small>` : ''}</p>
+          </div>
+          <div class="job-detail-block"><h4>必要な経験</h4><p>${escapeHtml(c.experience)}</p></div>
+        </div>
+        ${c.careerPath ? `<div class="job-section"><h4>キャリアパス</h4><p>${escapeHtml(c.careerPath)}</p></div>` : ''}
+        ${highlights.length ? `<div class="job-section"><h4>活躍できる方</h4><ul class="job-list">${highlights.map(h => `<li>${escapeHtml(h)}</li>`).join('')}</ul></div>` : ''}
+      </div>
+      <a href="#contact" class="btn-apply-card">この職種に応募する →</a>
+    </div>
+  `;
+  }).join('');
+}
+
+function renderBenefits(el, contents) {
+  el.innerHTML = contents.map((c, i) => `
+    <div class="benefit-item">
+      <span class="benefit-num">${String(i + 1).padStart(2, '0')}</span>
+      <div class="benefit-icon">${iconSvg(c.iconKey)}</div>
+      <h4>${escapeHtml(c.title)}</h4>
+      <p>${escapeHtml(c.description)}</p>
+    </div>
+  `).join('');
+}
+
+function renderVoices(el, contents) {
+  el.innerHTML = contents.map((v, i) => `
+    <div class="voice-card">
+      <span class="voice-num">${String(i + 1).padStart(2, '0')}</span>
+      <blockquote>${escapeHtml(v.quote)}</blockquote>
+      <div class="voice-divider"></div>
+      <div class="voice-person">
+        <div class="voice-avatar"><span class="voice-initial">${escapeHtml((v.name || '').charAt(0))}</span></div>
+        <div>
+          <div class="voice-name">${escapeHtml(v.name)}</div>
+          <div class="voice-role">${escapeHtml(v.role)}</div>
+        </div>
       </div>
     </div>
-  </div>
-`}).join('');
+  `).join('');
+}
+
+const CARD_SECTIONS = [
+  { type: 'business', containerId: 'business-grid', render: renderBusiness },
+  { type: 'jobs', containerId: 'jobs-grid', render: renderJobs },
+  { type: 'benefits', containerId: 'benefits-grid', render: renderBenefits },
+  { type: 'voices', containerId: 'voices-grid', render: renderVoices },
+];
+
+async function loadCards({ type, containerId, render }) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  try {
+    const res = await fetch(`/api/content?type=${type}`);
+    if (!res.ok) throw new Error(`status ${res.status}`);
+    const data = await res.json();
+    const contents = (data.contents || []).slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    render(el, contents);
+  } catch (err) {
+    console.warn(`microCMSからの取得に失敗（${type}）。フォールバックデータを使用します。`, err);
+    try {
+      const res = await fetch(`data/${type}.json`);
+      const contents = (await res.json()).slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      render(el, contents);
+    } catch (fallbackErr) {
+      console.error(`フォールバックの読み込みにも失敗しました（${type}）`, fallbackErr);
+    }
+  }
+}
+
+CARD_SECTIONS.forEach(loadCards);
 
 /* ===== 全ページ背景スライドショー ===== */
 (function () {

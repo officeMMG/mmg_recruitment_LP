@@ -1,0 +1,32 @@
+[
+  {
+    "title": "測量及び調査業務",
+    "iconKey": "entry",
+    "tags": "未経験者歓迎, 正社員",
+    "duties": "境界測量・地形測量・路線測量など各種測量業務\nUAV（ドローン）を活用した空撮・点群データ処理\nCADソフトを使った図面・成果品の作成\n測量データの整理・検証・報告書作成",
+    "salaryBase": "195,000円〜210,000円",
+    "salaryDaily": "9,000円〜10,000円",
+    "age": "44歳以下",
+    "qualification": "普通自動車運転免許（AT限定可）",
+    "qualificationNote": "※入社後取得可\n※測量士・測量士補をお持ちの方、尚可",
+    "experience": "不問",
+    "careerPath": "OJTで先輩社員とペアを組み、測量の基礎から丁寧に習得。測量士補・測量士の資格取得を会社がバックアップし、取得後は給与へ反映します。",
+    "highlights": "",
+    "order": 1
+  },
+  {
+    "title": "測量及び調査業務",
+    "iconKey": "experienced",
+    "tags": "経験者, 正社員",
+    "duties": "境界測量・地形測量・路線測量など各種測量業務\nUAV（ドローン）を活用した空撮・点群データ処理\nCADソフトを使った図面・成果品の作成\n現場リーダーとしてのプロジェクト管理・後輩指導",
+    "salaryBase": "210,000円〜300,000円",
+    "salaryDaily": "9,000円〜12,000円",
+    "age": "64歳以下",
+    "qualification": "普通自動車運転免許（AT限定可）／測量士補",
+    "qualificationNote": "※測量士をお持ちの方、尚可",
+    "experience": "測量業務の実務経験",
+    "careerPath": "",
+    "highlights": "測量士補・測量士の資格保有者（優遇）\nCAD（TREND-ONE・TREND-POINT等）の使用経験者\nドローン操縦経験・UAV測量の知識をお持ちの方",
+    "order": 2
+  }
+]

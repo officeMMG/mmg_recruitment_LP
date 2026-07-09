@@ -1,0 +1,38 @@
+[
+  {
+    "title": "週休2日制",
+    "iconKey": "schedule",
+    "description": "土日・祝日休み。測量業務の特性に合わせた柔軟なシフト対応も行います。",
+    "order": 1
+  },
+  {
+    "title": "社会保険完備",
+    "iconKey": "insurance",
+    "description": "健康保険・厚生年金・雇用保険・労災保険をすべて完備しています。",
+    "order": 2
+  },
+  {
+    "title": "資格取得支援",
+    "iconKey": "certification",
+    "description": "測量士・測量士補・ドローン操縦資格などの取得費用を会社がサポートします。",
+    "order": 3
+  },
+  {
+    "title": "交通費・車両手当",
+    "iconKey": "transport",
+    "description": "通勤交通費を支給。現場への移動は社有車を使用するため車両費用の負担なし。",
+    "order": 4
+  },
+  {
+    "title": "昇給・賞与制度",
+    "iconKey": "salary",
+    "description": "年1回の昇給査定と賞与を支給。スキルアップや資格取得で給与へ反映します。",
+    "order": 5
+  },
+  {
+    "title": "未経験者歓迎・OJT",
+    "iconKey": "training",
+    "description": "異業種からの転職実績多数。先輩社員がマンツーマンで基礎から丁寧に指導します。",
+    "order": 6
+  }
+]
