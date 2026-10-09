@@ -14,3 +14,10 @@ Thumbs.db
 # エディタ
 .vscode/
 .idea/
+
+# 依存関係
+node_modules/
+.env*
+
+# 作業用バックアップ
+_backup_*/

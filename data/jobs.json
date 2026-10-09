@@ -11,7 +11,7 @@
     "qualificationNote": "※入社後取得可\n※測量士・測量士補をお持ちの方、尚可",
     "experience": "不問",
     "careerPath": "OJTで先輩社員とペアを組み、測量の基礎から丁寧に習得。測量士補・測量士の資格取得を会社がバックアップし、取得後は給与へ反映します。",
-    "highlights": "",
+    "highlights": null,
     "order": 1
   },
   {
@@ -25,7 +25,7 @@
     "qualification": "普通自動車運転免許（AT限定可）／測量士補",
     "qualificationNote": "※測量士をお持ちの方、尚可",
     "experience": "測量業務の実務経験",
-    "careerPath": "",
+    "careerPath": null,
     "highlights": "測量士補・測量士の資格保有者（優遇）\nCAD（TREND-ONE・TREND-POINT等）の使用経験者\nドローン操縦経験・UAV測量の知識をお持ちの方",
     "order": 2
   }
