@@ -451,6 +451,29 @@ document.querySelectorAll('.reveal, .reason-item').forEach(observeReveal);
   }
 })();
 
+/* ===== 私たちについて：写真カードの入れ替え ===== */
+(function () {
+  const box = document.querySelector('.env-cards');
+  if (!box || prefersReducedMotion) return;
+  const cards = Array.from(box.querySelectorAll('.env-card'));
+  if (cards.length < 2) return;
+  let visible = false;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(box);
+  cards.forEach(c => c.addEventListener('animationend', () => c.classList.remove('is-out')));
+  setInterval(() => {
+    if (!visible || document.hidden) return;
+    cards.forEach(c => {
+      const pos = Number(c.dataset.pos);
+      if (pos === 0) {
+        c.dataset.pos = String(cards.length - 1);
+        c.classList.add('is-out');
+      } else {
+        c.dataset.pos = String(pos - 1);
+      }
+    });
+  }, 4000);
+})();
+
 /* ===== ヘッダー スクロール連動 ===== */
 const wrapper = document.getElementById('page-wrapper');
 const header = document.getElementById('site-header');

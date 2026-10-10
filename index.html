@@ -155,7 +155,7 @@
 
     /* ===== 写真の帯（すき間をロゴの水色に） ===== */
     .hero-gallery { overflow: hidden; background: var(--aqua); padding-block: 8px; }
-    .hero-gallery-track { display: flex; width: max-content; animation: galleryScroll 48s linear infinite; will-change: transform; }
+    .hero-gallery-track { display: flex; width: max-content; animation: galleryScroll 96s linear infinite; will-change: transform; }
     .hero-gallery-item { flex: 0 0 auto; width: clamp(220px, 26vw, 360px); aspect-ratio: 4 / 3; margin-right: 8px; background-size: cover; background-position: center; }
     @keyframes galleryScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -166,6 +166,21 @@
     .why-text .sec-head { margin-bottom: 0; }
     .why-text .mk { background: linear-gradient(180deg, rgba(255,255,255,0) 35%, rgba(255,255,255,0.6) 70%, rgb(255,255,255) 100%); }
     .why-text .sec-lead { color: var(--navy); }
+    .env-cards { overflow: hidden; background: var(--navy); }
+    .env-card { --x: 0px; --y: 0px; --r: 0deg; position: absolute; left: 50%; top: 50%; z-index: 1; width: min(78%, 540px); aspect-ratio: 4 / 3; margin: 0; background-size: cover; background-position: center; border: 6px solid #fff; box-shadow: 0 18px 40px rgba(0,16,58,0.45); transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--r)); transition: transform 0.9s cubic-bezier(0.22, 0.7, 0.2, 1); will-change: transform; }
+    .env-card[data-pos="0"] { z-index: 4; --r: -2deg; }
+    .env-card[data-pos="1"] { z-index: 3; --x: 16px; --y: 12px; --r: 3deg; }
+    .env-card[data-pos="2"] { z-index: 2; --x: -14px; --y: 22px; --r: -5deg; }
+    .env-card[data-pos="3"] { z-index: 1; --x: 8px; --y: 32px; --r: 6deg; }
+    .env-card.is-out { animation: envCardOut 1.2s cubic-bezier(0.45, 0, 0.2, 1) forwards; transition: none; }
+    @keyframes envCardOut {
+      0% { z-index: 5; transform: translate(-50%, -50%) rotate(-2deg); }
+      45% { z-index: 5; transform: translate(-50%, -50%) translate(-62%, -6%) rotate(-16deg); }
+      50% { z-index: 0; }
+      100% { z-index: 0; transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--r)); }
+    }
+    .env-card .photo-cap { left: 0; bottom: 0; opacity: 0; transition: opacity 0.4s; }
+    .env-card[data-pos="0"]:not(.is-out) .photo-cap { opacity: 1; transition-delay: 0.5s; }
     .photo-cap { position: absolute; left: 0; bottom: 0; margin: 0; padding: 6px 14px; background: rgba(1,16,58,0.7); color: #fff; font-size: 0.72rem; letter-spacing: 0.05em; line-height: 1.5; }
 
     /* 理由：写真と文章を左右交互に並べ、文章の箱を写真に少し重ねる */
@@ -701,6 +716,8 @@
       .hero-bottom { right: 20px; bottom: 56px; }
       .why-intro { grid-template-columns: 1fr; }
       .why-photo { min-height: 0; aspect-ratio: 4 / 5; }
+      .env-cards { aspect-ratio: 5 / 4; }
+      .env-card { width: 80%; border-width: 4px; }
       .reason-item, .reason-item.flip { grid-template-columns: 1fr; }
       .reason-photo, .reason-item.flip .reason-photo { grid-column: 1; grid-row: 1; }
       .reason-photo, .reason-item.flip .reason-photo { box-shadow: 12px 12px 0 var(--aqua); }
@@ -797,6 +814,7 @@
       .reticle, .hero-hint { display: none; }
       .hero-gallery-track { animation: none; }
       .hero-slide { transition: none; }
+      .env-card, .env-card.is-out { transition: none; animation: none; }
       * { scroll-behavior: auto !important; }
     }
   </style>
@@ -881,21 +899,32 @@
       <div class="hero-gallery-track" aria-hidden="true">
         <div class="hero-gallery-item" style="background-image:url('image/photo/strip-1.jpg')"></div>
         <div class="hero-gallery-item" style="background-image:url('image/photo/strip-2.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-3.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-4.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/photo-drone.jpg'); background-position: 72% center"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/env-3.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-5.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-6.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/env-4.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-8.jpg')"></div>
         <div class="hero-gallery-item" style="background-image:url('image/photo/strip-1.jpg')"></div>
         <div class="hero-gallery-item" style="background-image:url('image/photo/strip-2.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-3.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-4.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/photo-drone.jpg'); background-position: 72% center"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/env-3.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-5.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-6.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/env-4.jpg')"></div>
+        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-8.jpg')"></div>
       </div>
     </section>
 
     <!-- ===== 私たちについて ===== -->
     <section id="environment" class="section" style="padding-top:0;">
       <div class="why-intro">
-        <figure class="why-photo" style="background-image:url('image/photo/intro-forest.jpg')">
-          <figcaption class="photo-cap">山林内での測量作業</figcaption>
-        </figure>
+        <div class="why-photo env-cards" aria-label="現場写真">
+          <figure class="env-card" data-pos="0" style="background-image:url('image/photo/env-1.jpg')"><figcaption class="photo-cap">山林内での測量作業</figcaption></figure>
+          <figure class="env-card" data-pos="1" style="background-image:url('image/photo/photo-oudan.jpg')"><figcaption class="photo-cap">道路沿いでの横断測量</figcaption></figure>
+          <figure class="env-card" data-pos="2" style="background-image:url('image/photo/env-3.jpg')"><figcaption class="photo-cap">雨の日の現場観測</figcaption></figure>
+          <figure class="env-card" data-pos="3" style="background-image:url('image/photo/env-4.jpg')"><figcaption class="photo-cap">歩道での縦断測量</figcaption></figure>
+        </div>
         <div class="why-text">
           <div class="sec-head reveal">
             <p class="sec-label">私たちについて</p>
@@ -908,9 +937,9 @@
       <div class="container">
         <div class="reason-list">
           <article class="reason-item">
-            <div class="reason-photo" style="background-image:url('image/photo/card-veteran.jpg')">
-              <p class="note" style="left:10%; top:64%;">赤白のポールは、<br>測る点の目印。</p>
-              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M66 66 Q81 68 88 56 M88 56 l-4 1.5 M88 56 l-0.5 4"/></svg>
+            <div class="reason-photo" style="background-image:url('image/photo/reason-1.jpg')">
+              <p class="note" style="left:4%; top:6%;">先輩が隣で、<br>基本から教えます。</p>
+              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M50 16 Q78 16 86 42 M86 42 l-3.2 -3 M86 42 l1.4 -4"/></svg>
             </div>
             <div class="reason-text">
               <h3 class="reason-heading">未経験から、<span class="mk">技術職</span>へ</h3>
@@ -918,9 +947,9 @@
             </div>
           </article>
           <article class="reason-item flip">
-            <div class="reason-photo" style="background-image:url('image/photo/card-forest-ts.jpg')">
-              <p class="note tilt-r" style="left:56%; top:12%;">トータルステーション。<br>角度と距離をいっぺんに測る機械。</p>
-              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M90 27 Q76 26 71 37 M71 37 l0.6 -4.2 M71 37 l3.8 -1.6"/></svg>
+            <div class="reason-photo" style="background-image:url('image/photo/photo-drone.jpg')">
+              <p class="note tilt-r" style="left:40%; top:8%;">社内研修で練習し、<br>国家資格の合格者が操縦。</p>
+              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M106 16 Q118 17 119 31 M119 31 l-3.2 -3 M119 31 l1.4 -4"/></svg>
             </div>
             <div class="reason-text">
               <h3 class="reason-heading"><span class="mk">新しい技術</span>に触れる</h3>
@@ -928,9 +957,9 @@
             </div>
           </article>
           <article class="reason-item">
-            <div class="reason-photo" style="background-image:url('image/photo/card-city-ts.jpg')">
-              <p class="note" style="left:52%; top:62%;">街なかの現場でも、<br>同じ機械で測ります。</p>
-              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M83 60 Q62 60 52 43 M52 43 l0.8 4.2 M52 43 l4 1.6"/></svg>
+            <div class="reason-photo" style="background-image:url('image/photo/reason-3.jpg')">
+              <p class="note" style="left:4%; top:6%;">トータルステーション。<br>角度と距離をいっぺんに測る機械。</p>
+              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M62 16 Q75 15 78 27 M78 27 l-3.2 -3 M78 27 l1.4 -4"/></svg>
             </div>
             <div class="reason-text">
               <h3 class="reason-heading"><span class="mk">社会を支える</span>仕事</h3>
@@ -938,9 +967,9 @@
             </div>
           </article>
           <article class="reason-item flip">
-            <div class="reason-photo" style="background-image:url('image/photo/card-forest-staff.jpg')">
-              <p class="note tilt-r" style="left:17%; top:6%;">黄色い棒は標尺。<br>高さを読みます。</p>
-              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M46 24 Q52 36 62 46 M62 46 l-3.9 -1.2 M62 46 l-0.8 -4"/></svg>
+            <div class="reason-photo" style="background-image:url('image/photo/reason-4.jpg')">
+              <p class="note tilt-r" style="left:55%; top:5%;">衛星の電波で位置を測る、<br>GNSSアンテナ。</p>
+              <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M100 24 Q92 23 89 31 M89 31 l0.6 -4.2 M89 31 l3.8 -1.6"/></svg>
             </div>
             <div class="reason-text">
               <h3 class="reason-heading"><span class="mk">一生モノ</span>の技術を、その手に。</h3>
@@ -1057,7 +1086,7 @@
 
     <!-- ===== ステートメント ===== -->
     <section class="statement-banner">
-      <div class="statement-banner-photo" style="background-image:url('image/photo/forest-wide.jpg')" aria-hidden="true"></div>
+      <div class="statement-banner-photo" style="background-image:url('image/photo/photo-oudan.jpg'); background-position: center 55%;" aria-hidden="true"></div>
       <div class="statement-banner-inner reveal">
         <p class="statement-banner-text">今日の測量が、<br>明日の街をつくる。</p>
       </div>
@@ -1153,7 +1182,7 @@
 
     <!-- ===== CTA バナー ===== -->
     <section class="statement-banner statement-banner-cta">
-      <div class="statement-banner-photo" style="background-image:url('image/photo/hero-forest.jpg'); background-position: center 60%;" aria-hidden="true"></div>
+      <div class="statement-banner-photo" style="background-image:url('image/photo/banner-cta.jpg'); background-position: center 62%;" aria-hidden="true"></div>
       <div class="statement-banner-inner reveal">
         <p class="statement-banner-text">あなたの一歩が、<br>未来の街をつくる。</p>
         <p class="statement-banner-sub">まずは話を聞いてみたい、という方も歓迎です。</p>
@@ -1440,7 +1469,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261007d"></script>
+  <script src="script.js?v=20261010a"></script>
 
 </body>
 </html>
