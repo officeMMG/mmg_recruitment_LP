@@ -1,6 +1,6 @@
 {
-  "heroVideo": { "url": "image/video/hero.mp4?v=3" },
-  "heroPoster": { "url": "image/video/hero-poster.jpg?v=3" },
+  "heroVideo": { "url": "image/video/hero.mp4?v=4" },
+  "heroPoster": { "url": "image/video/hero-poster.jpg?v=4" },
   "gallery": [
     { "url": "image/photo/strip-1.jpg" },
     { "url": "image/photo/strip-2.jpg" },
