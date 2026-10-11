@@ -132,8 +132,15 @@
     /* ===== HERO ===== */
     #hero { position: relative; height: 100svh; min-height: 600px; max-height: 960px; overflow: hidden; background: var(--navy); color: var(--white); }
     .hero-media { position: absolute; inset: 0; }
-    .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.6s ease-in-out; will-change: opacity; }
-    .hero-slide.active { opacity: 1; }
+    .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    /* 動画の再生終了後に右下へ出す「もう一度見る」 */
+    .hero-replay { position: absolute; z-index: 3; right: 0; bottom: 0; display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border: 0; background: rgba(1,16,58,0.72); color: var(--aqua); font: inherit; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.25s ease, color 0.25s ease; }
+    .hero-replay[hidden] { display: none; }
+    .hero-replay.show { opacity: 1; transform: none; }
+    .hero-replay:hover, .hero-replay:focus-visible { background: var(--aqua); color: var(--navy); }
+    .hero-replay:focus-visible { outline: 2px solid var(--white); outline-offset: -4px; }
+    .hero-replay-icon { width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; position: relative; }
+    .hero-replay-icon::after { content: ""; position: absolute; right: -4px; top: -3px; border: 4px solid transparent; border-left-color: currentColor; transform: rotate(45deg); }
     .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(1,16,58,0.6) 0%, rgba(1,16,58,0.1) 55%, rgba(1,16,58,0.35) 100%), linear-gradient(0deg, rgba(1,16,58,0.55) 0%, rgba(1,16,58,0) 45%); }
     .hero-catch { position: absolute; z-index: 2; right: clamp(24px, 7vw, 110px); top: clamp(110px, 16vh, 160px); writing-mode: vertical-rl; font-family: var(--serif); font-weight: 900; font-size: clamp(2.4rem, 5.6vw, 4.6rem); line-height: 1.5; letter-spacing: 0.14em; text-shadow: 0 2px 24px rgba(0,0,0,0.35); }
     .hero-bottom { position: absolute; z-index: 2; left: clamp(20px, 5vw, 64px); bottom: clamp(48px, 9vh, 88px); max-width: 30em; }
@@ -151,7 +158,6 @@
     html.aiming #page-wrapper { cursor: none; }
     .hero-hint { position: absolute; z-index: 2; left: clamp(20px, 5vw, 64px); top: 104px; font-family: var(--hand); font-size: 0.95rem; color: var(--aqua); transform: rotate(-3deg); display: none; }
     @media (hover: hover) and (pointer: fine) { .hero-hint { display: block; } }
-    .hero-cap { position: absolute; z-index: 2; right: 0; bottom: 0; margin: 0; padding: 8px 16px; background: rgba(1,16,58,0.6); font-size: 0.72rem; letter-spacing: 0.06em; }
 
     /* ===== 写真の帯（すき間をロゴの水色に） ===== */
     .hero-gallery { overflow: hidden; background: var(--aqua); padding-block: 8px; }
@@ -813,7 +819,6 @@
       .biz-card h3, .biz-card .biz-photo, .biz-card .business-list li, .biz-card .business-etc { opacity: 1; animation: none !important; }
       .reticle, .hero-hint { display: none; }
       .hero-gallery-track { animation: none; }
-      .hero-slide { transition: none; }
       .env-card, .env-card.is-out { transition: none; animation: none; }
       * { scroll-behavior: auto !important; }
     }
@@ -880,9 +885,9 @@
     <!-- ===== HERO ===== -->
     <section id="hero">
       <div class="hero-media" aria-hidden="true">
-        <div class="hero-slide" style="background-image:url('image/photo/hero-city.jpg')"></div>
-        <div class="hero-slide" style="background-image:url('image/photo/hero-forest.jpg'); background-position: 40% center;"></div>
+        <video class="hero-video" data-media="heroVideo" poster="image/video/hero-poster.jpg?v=2" autoplay muted playsinline preload="auto"></video>
       </div>
+      <button type="button" class="hero-replay" hidden><span class="hero-replay-icon" aria-hidden="true"></span>もう一度見る</button>
       <div class="hero-overlay" aria-hidden="true"></div>
       <h1 class="hero-catch">地球を視て、<br>測る仕事。</h1>
       <div class="hero-bottom">
@@ -891,28 +896,11 @@
         <a href="#entry" class="btn btn-aqua">エントリーする<span class="arrow" aria-hidden="true"></span></a>
       </div>
       <p class="hero-hint" aria-hidden="true">カーソルを動かすと、座標が読めます</p>
-      <p class="hero-cap">当社の測量現場より</p>
     </section>
 
     <!-- ===== 写真の帯 ===== -->
     <section class="hero-gallery" aria-label="現場写真">
       <div class="hero-gallery-track" aria-hidden="true">
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-1.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-2.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/photo-drone.jpg'); background-position: 72% center"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/env-3.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-5.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-6.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/env-4.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-8.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-1.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-2.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/photo-drone.jpg'); background-position: 72% center"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/env-3.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-5.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-6.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/env-4.jpg')"></div>
-        <div class="hero-gallery-item" style="background-image:url('image/photo/strip-8.jpg')"></div>
       </div>
     </section>
 
@@ -920,10 +908,10 @@
     <section id="environment" class="section" style="padding-top:0;">
       <div class="why-intro">
         <div class="why-photo env-cards" aria-label="現場写真">
-          <figure class="env-card" data-pos="0" style="background-image:url('image/photo/env-1.jpg')"><figcaption class="photo-cap">山林内での測量作業</figcaption></figure>
-          <figure class="env-card" data-pos="1" style="background-image:url('image/photo/photo-oudan.jpg')"><figcaption class="photo-cap">道路沿いでの横断測量</figcaption></figure>
-          <figure class="env-card" data-pos="2" style="background-image:url('image/photo/env-3.jpg')"><figcaption class="photo-cap">雨の日の現場観測</figcaption></figure>
-          <figure class="env-card" data-pos="3" style="background-image:url('image/photo/env-4.jpg')"><figcaption class="photo-cap">歩道での縦断測量</figcaption></figure>
+          <figure class="env-card" data-pos="0" data-media="env1" data-media-w="1200"><figcaption class="photo-cap" data-media-caption="env1Caption">山林内での測量作業</figcaption></figure>
+          <figure class="env-card" data-pos="1" data-media="env2" data-media-w="1200"><figcaption class="photo-cap" data-media-caption="env2Caption">道路沿いでの横断測量</figcaption></figure>
+          <figure class="env-card" data-pos="2" data-media="env3" data-media-w="1200"><figcaption class="photo-cap" data-media-caption="env3Caption">雨の日の現場観測</figcaption></figure>
+          <figure class="env-card" data-pos="3" data-media="env4" data-media-w="1200"><figcaption class="photo-cap" data-media-caption="env4Caption">歩道での縦断測量</figcaption></figure>
         </div>
         <div class="why-text">
           <div class="sec-head reveal">
@@ -937,8 +925,8 @@
       <div class="container">
         <div class="reason-list">
           <article class="reason-item">
-            <div class="reason-photo" style="background-image:url('image/photo/reason-1.jpg')">
-              <p class="note" style="left:4%; top:6%;">先輩が隣で、<br>基本から教えます。</p>
+            <div class="reason-photo" data-media="reason1">
+              <p class="note" data-media-caption="reason1Note" style="left:4%; top:6%;">先輩が隣で、<br>基本から教えます。</p>
               <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M50 16 Q78 16 86 42 M86 42 l-3.2 -3 M86 42 l1.4 -4"/></svg>
             </div>
             <div class="reason-text">
@@ -947,7 +935,7 @@
             </div>
           </article>
           <article class="reason-item flip">
-            <div class="reason-photo" style="background-image:url('image/photo/photo-drone.jpg')">
+            <div class="reason-photo" data-media="reason2">
               <p class="note tilt-r" style="left:40%; top:8%;">社内研修で練習し、<br>国家資格の合格者が操縦。</p>
               <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M106 16 Q118 17 119 31 M119 31 l-3.2 -3 M119 31 l1.4 -4"/></svg>
             </div>
@@ -957,8 +945,8 @@
             </div>
           </article>
           <article class="reason-item">
-            <div class="reason-photo" style="background-image:url('image/photo/reason-3.jpg')">
-              <p class="note" style="left:4%; top:6%;">トータルステーション。<br>角度と距離をいっぺんに測る機械。</p>
+            <div class="reason-photo" data-media="reason3">
+              <p class="note" data-media-caption="reason3Note" style="left:4%; top:6%;">トータルステーション。<br>角度と距離をいっぺんに測る機械。</p>
               <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M62 16 Q75 15 78 27 M78 27 l-3.2 -3 M78 27 l1.4 -4"/></svg>
             </div>
             <div class="reason-text">
@@ -967,7 +955,7 @@
             </div>
           </article>
           <article class="reason-item flip">
-            <div class="reason-photo" style="background-image:url('image/photo/reason-4.jpg')">
+            <div class="reason-photo" data-media="reason4">
               <p class="note tilt-r" style="left:55%; top:5%;">衛星の電波で位置を測る、<br>GNSSアンテナ。</p>
               <svg class="note-arrow" viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true"><path d="M100 24 Q92 23 89 31 M89 31 l0.6 -4.2 M89 31 l3.8 -1.6"/></svg>
             </div>
@@ -1086,7 +1074,7 @@
 
     <!-- ===== ステートメント ===== -->
     <section class="statement-banner">
-      <div class="statement-banner-photo" style="background-image:url('image/photo/photo-oudan.jpg'); background-position: center 55%;" aria-hidden="true"></div>
+      <div class="statement-banner-photo" data-media="statementBanner" style="background-position: center 55%;" aria-hidden="true"></div>
       <div class="statement-banner-inner reveal">
         <p class="statement-banner-text">今日の測量が、<br>明日の街をつくる。</p>
       </div>
@@ -1105,8 +1093,8 @@
 
     <!-- ===== 募集要項 ===== -->
     <section id="recruit" class="section" style="padding-top:0;">
-      <figure class="recruit-banner" style="background-image:url('image/photo/city-wide.jpg')">
-        <figcaption class="photo-cap">トータルステーションと標尺（ポール）を使った観測</figcaption>
+      <figure class="recruit-banner" data-media="recruitBanner">
+        <figcaption class="photo-cap" data-media-caption="recruitBannerCaption">トータルステーションと標尺（ポール）を使った観測</figcaption>
       </figure>
       <div class="container" style="padding-top: clamp(88px, 12vw, 140px);">
         <div class="recruit-narrow">
@@ -1182,7 +1170,7 @@
 
     <!-- ===== CTA バナー ===== -->
     <section class="statement-banner statement-banner-cta">
-      <div class="statement-banner-photo" style="background-image:url('image/photo/banner-cta.jpg'); background-position: center 62%;" aria-hidden="true"></div>
+      <div class="statement-banner-photo" data-media="ctaBanner" style="background-position: center 62%;" aria-hidden="true"></div>
       <div class="statement-banner-inner reveal">
         <p class="statement-banner-text">あなたの一歩が、<br>未来の街をつくる。</p>
         <p class="statement-banner-sub">まずは話を聞いてみたい、という方も歓迎です。</p>
@@ -1358,7 +1346,7 @@
 
   <!-- ===== フッター ===== -->
   <footer>
-    <figure class="footer-photo" style="background-image:url('image/photo/footer-forest.jpg')" aria-hidden="true"></figure>
+    <figure class="footer-photo" data-media="footerPhoto" aria-hidden="true"></figure>
     <div class="container">
       <div class="footer-body">
       <div class="footer-inner">

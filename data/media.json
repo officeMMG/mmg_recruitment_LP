@@ -1,0 +1,29 @@
+{
+  "heroVideo": { "url": "image/video/hero.mp4?v=2" },
+  "heroPoster": { "url": "image/video/hero-poster.jpg?v=2" },
+  "gallery": [
+    { "url": "image/photo/strip-1.jpg" },
+    { "url": "image/photo/strip-2.jpg" },
+    { "url": "image/photo/photo-drone.jpg", "position": "72% center" },
+    { "url": "image/photo/env-3.jpg" },
+    { "url": "image/photo/strip-5.jpg" },
+    { "url": "image/photo/strip-6.jpg" },
+    { "url": "image/photo/env-4.jpg" },
+    { "url": "image/photo/strip-8.jpg" }
+  ],
+  "env1": { "url": "image/photo/env-1.jpg" },
+  "env2": { "url": "image/photo/photo-oudan.jpg" },
+  "env3": { "url": "image/photo/env-3.jpg" },
+  "env4": { "url": "image/photo/env-4.jpg" },
+  "reason1": { "url": "image/photo/reason-1.jpg" },
+  "reason2": { "url": "image/photo/photo-drone.jpg" },
+  "reason3": { "url": "image/photo/reason-3.jpg" },
+  "reason4": { "url": "image/photo/reason-4.jpg" },
+  "bizSurvey": { "url": "image/photo/biz-survey.jpg" },
+  "bizDesign": { "url": "image/photo/biz-design.jpg" },
+  "bizResearch": { "url": "image/photo/biz-research.jpg" },
+  "statementBanner": { "url": "image/photo/photo-oudan.jpg" },
+  "recruitBanner": { "url": "image/photo/city-wide.jpg" },
+  "ctaBanner": { "url": "image/photo/banner-cta.jpg" },
+  "footerPhoto": { "url": "image/photo/footer-forest.jpg" }
+}

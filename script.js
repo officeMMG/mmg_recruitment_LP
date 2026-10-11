@@ -17,8 +17,70 @@ function splitCsv(str) {
   return String(str ?? '').split(/[,，、]/).map(s => s.trim()).filter(Boolean);
 }
 
+/* ===== 写真・動画 =====
+   microCMS（オブジェクト形式の API「media」）から取得。未登録の項目と取得失敗時は data/media.json のローカル画像を使う。
+   HEROの動画と読み込み中の画像は、microCMS の「ファイル」項目が有料プラン限定のため data/media.json だけで管理する。
+   写真を入れる要素には data-media="項目ID" を付けておき、ここで背景画像（動画は src）を差し込む */
+const mediaReady = (async () => {
+  const local = await fetch('data/media.json').then(r => r.json()).catch(() => ({}));
+  try {
+    const res = await fetch('/api/content?type=media');
+    if (!res.ok) throw new Error(`status ${res.status}`);
+    const cms = await res.json();
+    const merged = { ...local };
+    Object.keys(cms).forEach(k => {
+      const v = cms[k];
+      if (Array.isArray(v) ? v.length : v && v.url) merged[k] = v;
+    });
+    return merged;
+  } catch (err) {
+    console.warn('microCMSからの取得に失敗（media）。ローカルの画像を使用します。', err);
+    return local;
+  }
+})();
+
+// microCMSの画像は表示幅に合わせて縮小・WebP化して受け取る（ローカル画像はそのまま）
+function mediaUrl(url, w) {
+  if (!/^https:\/\/images\.microcms-assets\.io\//.test(url)) return url;
+  return `${url}${url.includes('?') ? '&' : '?'}fm=webp&q=75&w=${w}`;
+}
+
+async function applyMedia(root) {
+  const media = await mediaReady;
+  root.querySelectorAll('[data-media]').forEach(el => {
+    const item = media[el.dataset.media];
+    if (!item || !item.url) return;
+    if (el.tagName === 'VIDEO') {
+      if (media.heroPoster && media.heroPoster.url) el.poster = mediaUrl(media.heroPoster.url, 1920);
+      el.src = item.url;
+      return;
+    }
+    el.style.backgroundImage = `url('${mediaUrl(item.url, Number(el.dataset.mediaW) || 1920)}')`;
+  });
+  // 写真の説明文・メモ（microCMSに入っているときだけ差し替え、1文字ずつの表示を付け直す。改行はそのまま改行に）
+  const flat = s => String(s ?? '').replace(/\s+/g, '');
+  root.querySelectorAll('[data-media-caption]').forEach(el => {
+    const text = String(media[el.dataset.mediaCaption] ?? '').trim();
+    if (!text || flat(text) === flat(el.getAttribute('aria-label') || el.textContent)) return;
+    el.innerHTML = splitLines(text).map(escapeHtml).join('<br>');
+    typewrite(el, el.classList.contains('note') ? 0.05 : 0.035);
+  });
+}
+
+// HEROの下の写真の帯（途切れずに流れるよう、同じ並びを2周分置く）
+async function renderGallery() {
+  const track = document.querySelector('.hero-gallery-track');
+  if (!track) return;
+  const list = (await mediaReady).gallery || [];
+  const items = list.filter(p => p && p.url).map(p => `<div class="hero-gallery-item" style="background-image:url('${escapeHtml(mediaUrl(p.url, 720))}')${p.position ? `; background-position:${escapeHtml(p.position)}` : ''}"></div>`).join('');
+  track.innerHTML = items + items;
+}
+
+applyMedia(document);
+renderGallery();
+
 /* ---- 対応する業務：山と町の地図の上の基準点記号。記号に触れると、横の野帳の札がその業務に切り替わる ---- */
-const BIZ_PHOTOS = { measure: 'image/photo/biz-survey.jpg', design: 'image/photo/biz-design.jpg', research: 'image/photo/biz-research.jpg' };
+const BIZ_PHOTOS = { measure: 'bizSurvey', design: 'bizDesign', research: 'bizResearch' };
 // 業務ごとの地図記号と位置（%）：測量＝山頂の三角点、設計＝町なかの電子基準点、調査＝県道沿いの水準点（image/business-map.svg と合わせている）
 const BIZ_MARKS = {
   measure:  { x: 18.5, y: 37.3, name: '三角点',     svg: '<path d="M20 3 L37 33 H3 Z"/><circle cx="20" cy="23" r="3"/>' },
@@ -67,7 +129,7 @@ function renderBusiness(el, contents) {
   }).join('');
   const cards = contents.map((c, i) => `
       <article class="biz-card${i === 0 ? ' is-active' : ''}" id="biz-card-${i}"${i === 0 ? '' : ' hidden'}>
-        ${BIZ_PHOTOS[c.iconKey] ? `<div class="biz-photo" style="background-image:url('${BIZ_PHOTOS[c.iconKey]}')" aria-hidden="true"></div>` : ''}
+        ${BIZ_PHOTOS[c.iconKey] ? `<div class="biz-photo" data-media="${BIZ_PHOTOS[c.iconKey]}" data-media-w="1200" aria-hidden="true"></div>` : ''}
         <div class="biz-card-body">
           <h3>${escapeHtml(c.title)}</h3>
           <ul class="business-list">${splitLines(c.items).map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
@@ -81,6 +143,7 @@ function renderBusiness(el, contents) {
       ${points}
     </div>
     <div class="biz-cards">${cards}</div>`;
+  applyMedia(el);
 
   const btns = [...el.querySelectorAll('.tri-point')];
   const show = idx => {
@@ -343,11 +406,11 @@ document.querySelectorAll('.reveal, .reason-item').forEach(observeReveal);
 })();
 
 /* ===== 写真の上の文字：1文字ずつ表示（画面に入ったとき一度だけ。改行の前後は少し間を空ける） ===== */
-(function () {
-  if (prefersReducedMotion) return;
+const typewrite = (function () {
+  if (prefersReducedMotion) return () => {};
   const targets = [
     ['.hero-catch', 0.12], ['.statement-banner-text', 0.09],
-    ['.reason-photo .note', 0.05], ['.photo-cap, .hero-cap', 0.035],
+    ['.reason-photo .note', 0.05], ['.photo-cap', 0.035],
   ];
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -356,7 +419,7 @@ document.querySelectorAll('.reveal, .reason-item').forEach(observeReveal);
       io.unobserve(entry.target);
     });
   }, { threshold: 0.5 });
-  targets.forEach(([sel, step]) => document.querySelectorAll(sel).forEach(el => {
+  const typewrite = (el, step) => {
     let n = 0, gap = 0;
     const wrap = node => {
       [...node.childNodes].forEach(child => {
@@ -377,7 +440,9 @@ document.querySelectorAll('.reveal, .reason-item').forEach(observeReveal);
     el.setAttribute('aria-label', el.textContent.trim());
     wrap(el);
     io.observe(el);
-  }));
+  };
+  targets.forEach(([sel, step]) => document.querySelectorAll(sel).forEach(el => typewrite(el, step)));
+  return typewrite;
 })();
 
 /* ===== 視準十字：ページ全体でカーソルに追従し、ページ内の位置を本社付近の緯度経度として表示（マウス操作の端末のみ） ===== */
@@ -436,18 +501,26 @@ document.querySelectorAll('.reveal, .reason-item').forEach(observeReveal);
   nums.forEach(n => io.observe(n));
 })();
 
-/* ===== HERO 背景クロスフェード（Ken Burns） ===== */
+/* ===== HERO 背景動画（最後で止めて「もう一度見る」を表示。動きを減らす設定では最初から止めてボタンだけ出す） ===== */
 (function () {
-  const slides = document.querySelectorAll('.hero-slide');
-  if (!slides.length) return;
-  let current = 0;
-  slides[current].classList.add('active');
-  if (!prefersReducedMotion) {
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 6000);
+  const video = document.querySelector('.hero-video');
+  const replay = document.querySelector('.hero-replay');
+  if (!video || !replay) return;
+  const showReplay = () => {
+    replay.hidden = false;
+    requestAnimationFrame(() => replay.classList.add('show'));
+  };
+  video.addEventListener('ended', showReplay);
+  replay.addEventListener('click', () => {
+    replay.classList.remove('show');
+    replay.hidden = true;
+    video.currentTime = 0;
+    video.play();
+  });
+  if (prefersReducedMotion) {
+    video.removeAttribute('autoplay');
+    video.pause();
+    showReplay();
   }
 })();
 

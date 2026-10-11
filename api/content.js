@@ -1,4 +1,6 @@
-const ALLOWED = new Set(['business', 'jobs', 'benefits', 'voices']);
+const ALLOWED = new Set(['business', 'jobs', 'benefits', 'voices', 'media']);
+// オブジェクト形式の API（一覧ではなく1件だけ返すので、件数・並び順の指定を付けない）
+const OBJECT_TYPES = new Set(['media']);
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -17,7 +19,8 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const r = await fetch(`https://${domain}.microcms.io/api/v1/${type}?limit=100&orders=order`, {
+    const query = OBJECT_TYPES.has(type) ? '' : '?limit=100&orders=order';
+    const r = await fetch(`https://${domain}.microcms.io/api/v1/${type}${query}`, {
       headers: { 'X-MICROCMS-API-KEY': apiKey },
     });
     if (!r.ok) throw new Error(`microCMS status: ${r.status}`);
