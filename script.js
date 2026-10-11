@@ -74,6 +74,16 @@ async function renderGallery() {
   const list = (await mediaReady).gallery || [];
   const items = list.filter(p => p && p.url).map(p => `<div class="hero-gallery-item" style="background-image:url('${escapeHtml(mediaUrl(p.url, 720))}')${p.position ? `; background-position:${escapeHtml(p.position)}` : ''}"></div>`).join('');
   track.innerHTML = items + items;
+  // 高さはそろえたまま、写真の縦横比に合わせて幅を変える（横長の写真も切らずに見せる）
+  const els = track.querySelectorAll('.hero-gallery-item');
+  list.filter(p => p && p.url).forEach((p, i, arr) => {
+    const img = new Image();
+    img.onload = () => {
+      const ar = img.naturalWidth / img.naturalHeight;
+      [els[i], els[i + arr.length]].forEach(el => el && el.style.setProperty('--ar', ar.toFixed(4)));
+    };
+    img.src = mediaUrl(p.url, 720);
+  });
 }
 
 applyMedia(document);
