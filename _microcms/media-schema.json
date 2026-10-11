@@ -1,0 +1,143 @@
+{
+  "apiFields": [
+    {
+      "fieldId": "gallery",
+      "name": "HERO下：流れる写真の帯（並べた順に表示）",
+      "kind": "mediaList",
+      "required": false
+    },
+    {
+      "fieldId": "env1",
+      "name": "私たちについて：写真1",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "env1Caption",
+      "name": "私たちについて：写真1の説明文",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "fieldId": "env2",
+      "name": "私たちについて：写真2",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "env2Caption",
+      "name": "私たちについて：写真2の説明文",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "fieldId": "env3",
+      "name": "私たちについて：写真3",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "env3Caption",
+      "name": "私たちについて：写真3の説明文",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "fieldId": "env4",
+      "name": "私たちについて：写真4",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "env4Caption",
+      "name": "私たちについて：写真4の説明文",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "fieldId": "reason1",
+      "name": "目指せる環境：写真1",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "reason1Note",
+      "name": "目指せる環境：写真1の手書きメモ（改行可）",
+      "kind": "textArea",
+      "required": false
+    },
+    {
+      "fieldId": "reason2",
+      "name": "目指せる環境：写真2",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "reason3",
+      "name": "目指せる環境：写真3",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "reason3Note",
+      "name": "目指せる環境：写真3の手書きメモ（改行可）",
+      "kind": "textArea",
+      "required": false
+    },
+    {
+      "fieldId": "reason4",
+      "name": "目指せる環境：写真4",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "bizSurvey",
+      "name": "仕事を知る：測量の写真",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "bizDesign",
+      "name": "仕事を知る：設計の写真",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "bizResearch",
+      "name": "仕事を知る：調査の写真",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "statementBanner",
+      "name": "帯「今日の測量が、明日の街をつくる。」の背景",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "recruitBanner",
+      "name": "募集要項：上の横長写真",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "recruitBannerCaption",
+      "name": "募集要項：横長写真の説明文",
+      "kind": "text",
+      "required": false
+    },
+    {
+      "fieldId": "ctaBanner",
+      "name": "帯「あなたの一歩が、未来の街をつくる。」の背景",
+      "kind": "media",
+      "required": false
+    },
+    {
+      "fieldId": "footerPhoto",
+      "name": "フッター：写真",
+      "kind": "media",
+      "required": false
+    }
+  ],
+  "customFields": []
+}

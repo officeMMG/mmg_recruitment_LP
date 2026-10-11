@@ -10,7 +10,7 @@
     "title": "設計",
     "iconKey": "design",
     "items": "農業土木\n一般土木\nGISデータ作成",
-    "note": "",
+    "note": null,
     "order": 2
   },
   {
