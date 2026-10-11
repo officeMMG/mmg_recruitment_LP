@@ -162,7 +162,7 @@
     /* ===== 写真の帯（すき間をロゴの水色に） ===== */
     .hero-gallery { overflow: hidden; background: var(--aqua); padding-block: 8px; }
     .hero-gallery-track { display: flex; width: max-content; animation: galleryScroll 96s linear infinite; will-change: transform; }
-    .hero-gallery-item { flex: 0 0 auto; width: clamp(220px, 26vw, 360px); aspect-ratio: 4 / 3; margin-right: 8px; background-size: cover; background-position: center; }
+    .hero-gallery-item { flex: 0 0 auto; width: calc(clamp(220px, 26vw, 360px) * 0.75 * var(--ar, 1.3333)); aspect-ratio: var(--ar, 1.3333); margin-right: 8px; background-size: cover; background-position: center; }
     @keyframes galleryScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     /* ===== 私たちについて ===== */
@@ -718,8 +718,20 @@
       .header-entry { width: 88px; font-size: 0.84rem; }
       .header-entry .arrow { display: none; }
       .hamburger { width: 56px; padding: 0 16px; }
-      .hero-catch { right: 20px; top: 96px; font-size: clamp(2.1rem, 10vw, 2.8rem); }
-      .hero-bottom { right: 20px; bottom: 56px; }
+      /* HERO：動画（16:9）を切らずに全体表示し、文字は動画の下へ */
+      #hero { height: auto; min-height: 0; max-height: none; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; align-items: end; padding: calc(64px + env(safe-area-inset-top, 0px)) 20px 48px; }
+      .hero-media { position: relative; inset: auto; grid-column: 1 / -1; margin-inline: -20px; aspect-ratio: 16 / 9; margin-bottom: 32px; }
+      .hero-overlay { inset: auto 0 auto 0; top: calc(64px + env(safe-area-inset-top, 0px)); aspect-ratio: 16 / 9; background: linear-gradient(0deg, rgba(1,16,58,0.5) 0%, rgba(1,16,58,0) 40%); }
+      .hero-replay { bottom: auto; top: calc(64px + env(safe-area-inset-top, 0px) + 56.25vw - 40px); padding: 10px 16px; font-size: 0.78rem; }
+      .hero-catch { position: relative; right: auto; top: auto; grid-column: 2; grid-row: 2; align-self: start; font-size: clamp(1.8rem, 8.4vw, 2.6rem); }
+      .hero-bottom { position: relative; left: auto; bottom: auto; grid-column: 1; grid-row: 2; max-width: none; }
+      .hero-sub { font-size: 0.88rem; line-height: 1.9; }
+      .hero-sub br { display: none; }
+      .hero-bottom .btn { padding: 0 24px; white-space: nowrap; }
+      .hero-hint { display: none !important; }
+      /* 差し込み写真：写真の比率どおりに全体を見せる（文字が多いときは高さが伸びる） */
+      .statement-banner { min-height: 0; aspect-ratio: 4 / 3; padding-block: 32px; }
+      .recruit-banner { aspect-ratio: 3 / 1; }
       .why-intro { grid-template-columns: 1fr; }
       .why-photo { min-height: 0; aspect-ratio: 4 / 5; }
       .env-cards { aspect-ratio: 5 / 4; }
@@ -768,7 +780,6 @@
       /* 1列のときは上から順に */
       .persona-check:nth-child(1) { --i: 0; } .persona-check:nth-child(2) { --i: 1; } .persona-check:nth-child(3) { --i: 2; }
       .persona-check:nth-child(4) { --i: 3; } .persona-check:nth-child(5) { --i: 4; } .persona-check:nth-child(6) { --i: 5; }
-      .recruit-banner { aspect-ratio: 16 / 9; }
       /* スマホは見出しタブをノートの上に横並び */
       .recruit-tabs-wrap { grid-template-columns: 1fr; }
       .recruit-tabs { grid-column: 1; grid-row: 1; flex-direction: row; gap: 6px; padding-top: 0; }
@@ -792,7 +803,7 @@
       .entry-flow::before { display: block; }
       .entry-flow li { grid-template-columns: 36px 1fr; text-align: left; justify-items: start; gap: 16px; }
       footer { padding-top: 0; }
-      .footer-photo { position: relative; width: auto; aspect-ratio: 4 / 3; margin-bottom: 48px; }
+      .footer-photo { position: relative; width: auto; aspect-ratio: 1200 / 931; margin-bottom: 48px; }
       .footer-photo::after { background: linear-gradient(0deg, var(--navy-deep) 0%, rgba(0,16,58,0.2) 45%); }
       .footer-body { max-width: none; }
       .float-apply { left: 16px; right: calc(16px + var(--sbw, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
@@ -1457,7 +1468,7 @@
     </div>
   </div>
 
-  <script src="script.js?v=20261010a"></script>
+  <script src="script.js?v=20261012a"></script>
 
 </body>
 </html>
