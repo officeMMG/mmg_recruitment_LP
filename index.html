@@ -130,7 +130,8 @@
     @keyframes navIn { to { opacity: 1; transform: none; } }
 
     /* ===== HERO ===== */
-    #hero { position: relative; height: 100svh; min-height: 600px; max-height: 960px; overflow: hidden; background: var(--navy); color: var(--white); }
+    /* 動画（16:9）を切らずに見せるため、HEROは動画と同じ比率にする */
+    #hero { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--navy); color: var(--white); }
     .hero-media { position: absolute; inset: 0; }
     .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     /* 動画の再生終了後に右下へ出す「もう一度見る」 */
@@ -354,6 +355,12 @@
     /* ===== ステートメント ===== */
     .statement-banner { position: relative; min-height: clamp(360px, 44vw, 560px); display: flex; align-items: center; justify-content: center; overflow: hidden; color: var(--white); text-align: center; }
     .statement-banner-photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+    /* 横長の帯では写真全体を中央に収め、左右の余白は同じ写真をぼかして埋める */
+    @media (min-width: 768px) and (orientation: landscape), (min-width: 1101px) {
+      .statement-banner-photo::before, .statement-banner-photo::after { content: ''; position: absolute; background: inherit; }
+      .statement-banner-photo::before { inset: -40px; background-size: cover; filter: blur(24px) brightness(0.85); }
+      .statement-banner-photo::after { inset: 0; background-size: contain; background-position: center; background-repeat: no-repeat; }
+    }
     .statement-banner::before { content: ''; position: absolute; inset: 0; z-index: 1; background: rgba(1,16,58,0.52); }
     .statement-banner-inner { position: relative; z-index: 2; padding: 0 24px; }
     .statement-banner-text { font-family: var(--serif); font-size: clamp(1.8rem, 4.6vw, 3.4rem); font-weight: 900; line-height: 1.6; letter-spacing: 0.1em; }
@@ -386,7 +393,7 @@
     .voice-role { font-size: 0.84rem; color: var(--gray); }
 
     /* ===== 募集要項 ===== */
-    .recruit-banner { position: relative; margin: 0; width: 100%; aspect-ratio: 21 / 8; background-size: cover; background-position: center 60%; }
+    .recruit-banner { position: relative; margin: 0; width: 100%; aspect-ratio: 3 / 1; background-size: cover; background-position: center 60%; }
     .recruit-narrow { max-width: 960px; margin-inline: auto; }
     .persona-section { background: var(--aqua); padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px); margin-bottom: 48px; }
     .persona-section h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 20px; }
@@ -711,6 +718,20 @@
       .tri-label { font-size: 0.85rem; }
       .voice-card { grid-template-columns: 1fr; gap: 16px; }
     }
+    /* HERO（スマホ・縦向きタブレット）：動画（16:9）を切らずに全体表示し、文字は動画の下へ */
+    @media (max-width: 767px), (max-width: 1100px) and (orientation: portrait) {
+      #hero { --hdr: 80px; --gut: clamp(20px, 5vw, 48px); aspect-ratio: auto; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; align-items: end; padding: calc(var(--hdr) + env(safe-area-inset-top, 0px)) var(--gut) 48px; }
+      .hero-media { position: relative; inset: auto; grid-column: 1 / -1; margin-inline: calc(var(--gut) * -1); aspect-ratio: 16 / 9; margin-bottom: 32px; }
+      .hero-overlay { inset: auto 0 auto 0; top: calc(var(--hdr) + env(safe-area-inset-top, 0px)); aspect-ratio: 16 / 9; background: linear-gradient(0deg, rgba(1,16,58,0.5) 0%, rgba(1,16,58,0) 40%); }
+      .hero-replay { bottom: auto; top: calc(var(--hdr) + env(safe-area-inset-top, 0px) + 56.25vw - 40px); padding: 10px 16px; font-size: 0.78rem; }
+      .hero-catch { position: relative; right: auto; top: auto; grid-column: 2; grid-row: 2; align-self: start; font-size: clamp(1.5rem, 8.4vw, 3.4rem); }
+      .hero-bottom { position: relative; left: auto; bottom: auto; grid-column: 1; grid-row: 2; max-width: none; }
+      .hero-sub { line-height: 1.9; }
+      .hero-bottom .btn { padding: 0 clamp(14px, 4vw, 24px); gap: 12px; white-space: nowrap; }
+      .hero-hint { display: none !important; }
+      /* 差し込み写真：写真の比率どおりに全体を見せる（文字が多いときは高さが伸びる） */
+      .statement-banner { min-height: 0; aspect-ratio: 4 / 3; padding-block: 32px; }
+    }
     @media (max-width: 767px) {
       .header-inner { height: 64px; }
       .header-logo img { height: 36px; }
@@ -718,20 +739,9 @@
       .header-entry { width: 88px; font-size: 0.84rem; }
       .header-entry .arrow { display: none; }
       .hamburger { width: 56px; padding: 0 16px; }
-      /* HERO：動画（16:9）を切らずに全体表示し、文字は動画の下へ */
-      #hero { height: auto; min-height: 0; max-height: none; display: grid; grid-template-columns: 1fr auto; column-gap: 16px; align-items: end; padding: calc(64px + env(safe-area-inset-top, 0px)) 20px 48px; }
-      .hero-media { position: relative; inset: auto; grid-column: 1 / -1; margin-inline: -20px; aspect-ratio: 16 / 9; margin-bottom: 32px; }
-      .hero-overlay { inset: auto 0 auto 0; top: calc(64px + env(safe-area-inset-top, 0px)); aspect-ratio: 16 / 9; background: linear-gradient(0deg, rgba(1,16,58,0.5) 0%, rgba(1,16,58,0) 40%); }
-      .hero-replay { bottom: auto; top: calc(64px + env(safe-area-inset-top, 0px) + 56.25vw - 40px); padding: 10px 16px; font-size: 0.78rem; }
-      .hero-catch { position: relative; right: auto; top: auto; grid-column: 2; grid-row: 2; align-self: start; font-size: clamp(1.8rem, 8.4vw, 2.6rem); }
-      .hero-bottom { position: relative; left: auto; bottom: auto; grid-column: 1; grid-row: 2; max-width: none; }
-      .hero-sub { font-size: 0.88rem; line-height: 1.9; }
+      #hero { --hdr: 64px; }
+      .hero-sub { font-size: 0.88rem; }
       .hero-sub br { display: none; }
-      .hero-bottom .btn { padding: 0 24px; white-space: nowrap; }
-      .hero-hint { display: none !important; }
-      /* 差し込み写真：写真の比率どおりに全体を見せる（文字が多いときは高さが伸びる） */
-      .statement-banner { min-height: 0; aspect-ratio: 4 / 3; padding-block: 32px; }
-      .recruit-banner { aspect-ratio: 3 / 1; }
       .why-intro { grid-template-columns: 1fr; }
       .why-photo { min-height: 0; aspect-ratio: 4 / 5; }
       .env-cards { aspect-ratio: 5 / 4; }
